@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sena Koç | Portfolio</title>
+  <style>
+    :root{
+      --bg:#070A12;
+      --panel:rgba(255,255,255,0.06);
+      --border:rgba(255,255,255,0.10);
+      --text:rgba(255,255,255,0.92);
+      --muted:rgba(255,255,255,0.65);
+      --accent:#ff4d6d;
+      --accent2:#6ea8ff;
+      --shadow:0 18px 60px rgba(0,0,0,0.45);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(900px 500px at 20% 10%, rgba(110,168,255,0.18), transparent 60%),
+                  radial-gradient(900px 500px at 80% 30%, rgba(255,77,109,0.14), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+    }
+
+    /* NAVBAR */
+    .navbar{
+      position: sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(7,10,18,0.65);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{
+      max-width:1100px; margin:0 auto;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 18px; gap:14px;
+    }
+    .brand{font-weight:900; letter-spacing:.3px}
+    .brand .accent{color:var(--accent)}
+    .nav-links{display:flex; gap:16px; align-items:center}
+    .nav-links a{
+      color:rgba(255,255,255,0.75);
+      text-decoration:none; font-size:13.5px;
+      padding:10px 8px; border-radius:10px;
+    }
+    .nav-links a:hover{background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.95)}
+    .lang-btn{
+      padding:9px 12px; border-radius:12px;
+      background: rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.9);
+      cursor:pointer; font-weight:800; font-size:12.5px;
+    }
+    @media (max-width: 900px){ .nav-links{display:none} }
+
+    /* LAYOUT */
+    .container{max-width:1100px; margin:0 auto; padding:0 18px;}
+    section{padding:70px 0 20px;}
+    .section-title{
+      font-size:44px; margin:0 0 10px;
+      letter-spacing:-0.5px;
+    }
+    .underline{
+      width:90px; height:4px; background:var(--accent);
+      border-radius:10px; margin:14px 0 26px;
+    }
+
+    /* HOME */
+    #home{min-height:82vh; display:flex; align-items:center; text-align:center;}
+    .home-wrap{max-width:900px; margin:0 auto;}
+    .home-wrap h1{font-size:64px; margin:0 0 10px;}
+    .home-wrap h2{margin:0 0 14px; font-size:24px; color:var(--muted); font-weight:550;}
+    .home-wrap p{margin:0 auto 22px; max-width:700px; color:var(--muted); line-height:1.65;}
+    .actions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 16px; border-radius:14px;
+      text-decoration:none; color:rgba(255,255,255,0.92);
+      border:1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      font-weight:800; font-size:13.5px;
+      transition: transform .15s ease, background .15s ease;
+    }
+    .btn:hover{transform: translateY(-2px); background: rgba(255,255,255,0.09);}
+    .btn.primary{background: linear-gradient(90deg, var(--accent), var(--accent2)); border:none;}
+
+    /* EXPERIENCE */
+    .timeline{display:flex; flex-direction:column; gap:14px;}
+    .timeline-item{
+      background: var(--panel);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding:18px 18px;
+      box-shadow: var(--shadow);
+    }
+    .meta{color:var(--muted); font-size:13px; margin-top:6px;}
+    .highlights{margin:10px 0 0; padding-left:18px; color:rgba(255,255,255,0.82);}
+    .highlights li{margin:6px 0; line-height:1.45;}
+
+    /* PROJECTS */
+    .grid{display:grid; gap:18px; grid-template-columns:repeat(3, minmax(0, 1fr));}
+    @media (max-width: 980px){ .grid{grid-template-columns:repeat(2, 1fr);} }
+    @media (max-width: 640px){ .grid{grid-template-columns:1fr;} }
+
+    .card{
+      background: var(--panel);
+      border:1px solid var(--border);
+      border-radius: 22px;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      display:flex; flex-direction:column;
+      min-height: 420px;
+    }
+    .card-media{
+      height:180px;
+      background: rgba(0,0,0,0.25);
+      display:flex; align-items:center; justify-content:center;
+      color: rgba(255,255,255,0.55);
+      font-weight:700;
+    }
+    .card-media img{width:100%; height:100%; object-fit:cover;}
+    .card-body{padding:16px 16px 18px; display:flex; flex-direction:column; gap:10px; flex:1;}
+    .card-title{font-size:18px; margin:0;}
+    .period{font-size:12px; color:rgba(255,255,255,0.60);}
+    .desc{color:rgba(255,255,255,0.78); line-height:1.55; font-size:14px; margin:0;}
+    .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:6px;}
+    .tag{
+      font-size:12px;
+      color: rgba(255,255,255,0.78);
+      background: rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.10);
+      padding:7px 10px;
+      border-radius:999px;
+    }
+    .card-footer{padding:0 16px 16px; display:flex; gap:10px; align-items:center; justify-content:space-between;}
+    .link{color:rgba(255,255,255,0.75); font-size:13px;}
+    .link a{color:rgba(255,255,255,0.9); text-decoration:none;}
+    .link a:hover{text-decoration:underline;}
+
+    /* CONTACT */
+    .contact-box{
+      background: var(--panel);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: var(--shadow);
+    }
+    .contact-box a{color: rgba(255,255,255,0.92);}
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="brand">Sena <span class="accent">Koç</span></div>
+
+      <div class="nav-links">
+        <a href="#home" data-i18n="nav_home">Ana Sayfa</a>
+        <a href="#about" data-i18n="nav_about">Hakkımda</a>
+        <a href="#experience" data-i18n="nav_experience">Eğitim ve Tecrübeler</a>
+        <a href="#projects" data-i18n="nav_projects">Projeler</a>
+        <a href="#contact" data-i18n="nav_contact">İletişim</a>
+      </div>
+
+      <button id="langToggle" class="lang-btn" type="button">EN</button>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- ANA SAYFA -->
+    <section id="home">
+      <div class="home-wrap">
+        <h1><span data-i18n="home_hello">Merhaba, Ben</span> <span class="accent">Sena</span></h1>
+        <h2 data-i18n="home_sub">Bilgisayar Mühendisliği öğrencisi · Computer Vision · Algorithms · Autonomous Systems</h2>
+        <p data-i18n="home_desc">
+          Bilgisayarlı görü, algoritmalar ve otonom sistemler üzerine odaklanıyorum. Gerçek dünya problemleri için veri odaklı,
+          sağlam ve iteratif çözümler üretmeyi seviyorum.
+        </p>
+
+        <div class="actions">
+          <a class="btn primary" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a class="btn" href="https://github.com/senainspace" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a class="btn" href="/admin/" target="_blank" rel="noopener noreferrer">/admin</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAKKIMDA (şimdilik sabit) -->
+    <section id="about">
+      <h2 class="section-title" data-i18n="about_title">Hakkımda</h2>
+      <div class="underline"></div>
+      <p style="color:var(--muted); max-width: 850px; line-height:1.7;">
+        <span data-i18n="about_text">
+          İzmir’de Bilgisayar Mühendisliği öğrencisiyim. Algoritmalar, veri yapıları ve bilgisayarlı görü alanlarında projeler geliştiriyorum.
+          Özellikle gerçek dünya uygulamalarında model geliştirme, veri hazırlama ve sistem tasarımı süreçlerine ilgi duyuyorum.
+        </span>
+      </p>
+    </section>
+
+    <!-- EĞİTİM & TECRÜBE (DB) -->
+    <section id="experience">
+      <h2 class="section-title" data-i18n="exp_title">Eğitim ve Tecrübeler</h2>
+      <div class="underline"></div>
+
+      <div class="timeline">
+        {% for e in experiences %}
+          <div class="timeline-item">
+            <div style="font-size:18px; font-weight:900;">{{ e.title }}</div>
+
+            <div style="color:rgba(255,255,255,0.82); margin-top:6px;">
+              {{ e.organization }}{% if e.location %} · {{ e.location }}{% endif %}
+            </div>
+
+            <div class="meta">
+              {% if e.end_date %}
+                {{ e.start_date|date:"M Y" }} – {{ e.end_date|date:"M Y" }}
+              {% else %}
+                {{ e.start_date|date:"M Y" }} – Present
+              {% endif %}
+            </div>
+
+            {% if e.highlight_list %}
+              <ul class="highlights">
+                {% for line in e.highlight_list %}
+                  <li>{{ line }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% empty %}
+          <div style="color:var(--muted);">No experience yet. Add items via /admin.</div>
+        {% endfor %}
+      </div>
+    </section>
+
+
+    <!-- PROJELER (DB) -->
+    <section id="projects">
+      <h2 class="section-title" data-i18n="proj_title">Projeler</h2>
+      <div class="underline"></div>
+
+      <div class="grid">
+        {% for project in projects %}
+          <div class="card">
+            <div class="card-media">
+              {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}">
+              {% else %}
+                No image
+              {% endif %}
+            </div>
+
+            <div class="card-body">
+              <h3 class="card-title">{{ project.title }}</h3>
+
+              <div class="period">
+                {% if project.end_date %}
+                  {{ project.start_date|date:"M Y" }} – {{ project.end_date|date:"M Y" }}
+                {% else %}
+                  {{ project.start_date|date:"M Y" }} – Present
+                {% endif %}
+              </div>
+
+              <p class="desc">{{ project.description }}</p>
+
+              {% if project.tag_list %}
+                <div class="tags">
+                  {% for t in project.tag_list %}
+                    <span class="tag">{{ t }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="card-footer">
+              {% if project.url %}
+                <a class="btn primary" href="{{ project.url }}" target="_blank" rel="noopener noreferrer">View</a>
+                <div class="link">External link</div>
+              {% else %}
+                <div class="link">No external link</div>
+              {% endif %}
+
+              <div class="link">
+                Added: {{ project.created_at|date:"M d, Y" }}
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <p style="color:var(--muted);">No projects yet. Add projects via /admin.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+
+    <!-- İLETİŞİM -->
+    <section id="contact">
+      <h2 class="section-title" data-i18n="contact_title">İletişim</h2>
+      <div class="underline"></div>
+      <div class="contact-box">
+        <div style="color:var(--muted)" data-i18n="contact_text">
+          Bana ulaşmak için e-posta gönderebilir veya LinkedIn’den yazabilirsin.
+        </div>
+        <div style="margin-top:10px;">
+          <div>Email: <a href="mailto:senakoc@example.com">senakoc@example.com</a></div>
+          <div>GitHub: <a href="https://github.com/senainspace" target="_blank" rel="noopener noreferrer">github.com/senainspace</a></div>
+          <div>LinkedIn: <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">linkedin.com</a></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Minimal TR/EN toggle for fixed UI texts (projects/experience content stays as entered in admin)
+    const translations = {
+      tr: {
+        nav_home: "Ana Sayfa",
+        nav_about: "Hakkımda",
+        nav_experience: "Eğitim ve Tecrübeler",
+        nav_projects: "Projeler",
+        nav_contact: "İletişim",
+        home_hello: "Merhaba, Ben",
+        home_sub: "Bilgisayar Mühendisliği öğrencisi · Computer Vision · Algorithms · Autonomous Systems",
+        home_desc: "Bilgisayarlı görü, algoritmalar ve otonom sistemler üzerine odaklanıyorum. Gerçek dünya problemleri için veri odaklı, sağlam ve iteratif çözümler üretmeyi seviyorum.",
+        about_title: "Hakkımda",
+        about_text: "İzmir’de Bilgisayar Mühendisliği öğrencisiyim. Algoritmalar, veri yapıları ve bilgisayarlı görü alanlarında projeler geliştiriyorum. Özellikle gerçek dünya uygulamalarında model geliştirme, veri hazırlama ve sistem tasarımı süreçlerine ilgi duyuyorum.",
+        exp_title: "Eğitim ve Tecrübeler",
+        proj_title: "Projeler",
+        contact_title: "İletişim",
+        contact_text: "Bana ulaşmak için e-posta gönderebilir veya LinkedIn’den yazabilirsin."
+      },
+      en: {
+        nav_home: "Home",
+        nav_about: "About",
+        nav_experience: "Education & Experience",
+        nav_projects: "Projects",
+        nav_contact: "Contact",
+        home_hello: "Hi, I’m",
+        home_sub: "Computer Engineering student · Computer Vision · Algorithms · Autonomous Systems",
+        home_desc: "I focus on computer vision, algorithms, and autonomous systems. I enjoy building data-driven, robust, iterative solutions for real-world engineering problems.",
+        about_title: "About",
+        about_text: "I’m a Computer Engineering student in Izmir. I build projects in algorithms, data structures, and computer vision. I’m especially interested in model development, dataset preparation, and system design for real-world applications.",
+        exp_title: "Education & Experience",
+        proj_title: "Projects",
+        contact_title: "Contact",
+        contact_text: "Feel free to email me or reach out via LinkedIn."
+      }
+    };
+
+    let currentLang = "tr";
+    const btn = document.getElementById("langToggle");
+
+    function applyLang(lang){
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[lang][key]) el.textContent = translations[lang][key];
+      });
+      btn.textContent = (lang === "tr") ? "EN" : "TR";
+      currentLang = lang;
+    }
+
+    btn.addEventListener("click", () => {
+      applyLang(currentLang === "tr" ? "en" : "tr");
+    });
+
+    applyLang("tr");
+  </script>
+</body>
+</html>
