@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Sena Koç | Portfolio</title>
   <style>
+
+    html { scroll-behavior: smooth; }
+    .nav-links a.active{
+      color: rgba(255,255,255,0.95);
+      background: rgba(255,255,255,0.08);
+    }
+
     :root{
       --bg:#070A12;
       --panel:rgba(255,255,255,0.06);
@@ -87,18 +94,6 @@
     .btn:hover{transform: translateY(-2px); background: rgba(255,255,255,0.09);}
     .btn.primary{background: linear-gradient(90deg, var(--accent), var(--accent2)); border:none;}
 
-    /* EXPERIENCE */
-    .timeline{display:flex; flex-direction:column; gap:14px;}
-    .timeline-item{
-      background: var(--panel);
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      padding:18px 18px;
-      box-shadow: var(--shadow);
-    }
-    .meta{color:var(--muted); font-size:13px; margin-top:6px;}
-    .highlights{margin:10px 0 0; padding-left:18px; color:rgba(255,255,255,0.82);}
-    .highlights li{margin:6px 0; line-height:1.45;}
 
     /* PROJECTS */
     .grid{display:grid; gap:18px; grid-template-columns:repeat(3, minmax(0, 1fr));}
@@ -140,6 +135,95 @@
     .link a{color:rgba(255,255,255,0.9); text-decoration:none;}
     .link a:hover{text-decoration:underline;}
 
+    /* ===== COMPETITIONS TIMELINE ===== */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .timeline-rail {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      min-height: 100%;
+      padding-top: 6px;
+    }
+
+    .timeline-dot {
+      height: 10px;
+      width: 10px;
+      border-radius: 999px;
+      border: 1px solid #3a3a3a;
+      background: #141414;
+      z-index: 2;
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 16px;
+      bottom: -16px;
+      width: 1px;
+      background: #2a2a2a;
+    }
+
+    .timeline-item:last-child .timeline-line {
+      display: none;
+    }
+
+    .timeline-card {
+      background: #141414;
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .timeline-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .timeline-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .timeline-logo {
+      height: 40px;
+      width: 40px;
+      border-radius: 10px;
+      border: 1px solid #2a2a2a;
+      background: #101010;
+      object-fit: contain;
+    }
+
+    .timeline-meta {
+      margin-top: 4px;
+    }
+
+    .timeline-role {
+      margin-top: 8px;
+    }
+
+    .timeline-desc {
+      margin-top: 10px;
+    }
+
+    .timeline-members summary {
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
     /* CONTACT */
     .contact-box{
       background: var(--panel);
@@ -149,6 +233,121 @@
       box-shadow: var(--shadow);
     }
     .contact-box a{color: rgba(255,255,255,0.92);}
+
+    /* ===== CV CARD (Education + Experience) ===== */
+    .cv-card{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .cv-date{
+      opacity: .8;
+      font-size: 13px;
+    }
+
+    .cv-date-range{
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      line-height: 1.2;
+    }
+
+    .cv-date-range .dash{
+      opacity: .6;
+    }
+
+    .cv-body{
+      min-width: 0; /* taşma/çakışma fix */
+    }
+
+    .cv-header{
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .cv-title-block{
+      min-width: 0;
+    }
+
+    .cv-title{
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    .cv-sub{
+      margin-top: 6px;
+      line-height: 1.25;
+      word-break: break-word;
+    }
+
+    .cv-right{
+      max-width: 320px;
+      text-align: right;
+    }
+
+    .cv-bullets{
+      margin: 12px 0 0;
+      padding-left: 18px;
+    }
+
+    .cv-bullets li{
+      margin: 6px 0;
+    }
+
+    /* Mobilde düzgün kırılım */
+    @media (max-width: 720px){
+      .cv-card{
+        grid-template-columns: 1fr;
+      }
+      .cv-date-range{
+        flex-direction: row;
+        gap: 8px;
+        align-items: baseline;
+      }
+      .cv-date-range .dash{
+        display: inline;
+      }
+      .cv-right{
+        text-align: left;
+        max-width: none;
+      }
+    }
+    /* ===== EDUCATION TYPOGRAPHY ===== */
+    .edu-school {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    .edu-degree {
+      margin-top: 6px;
+      font-size: 16px;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+
+    .edu-department {
+      margin-top: 4px;
+      font-size: 14px;
+      opacity: 0.75;
+    }
+    .cv-list{
+      display: flex;
+      flex-direction: column;
+      gap: 16px; /* kartlar arası boşluk */
+    }
   </style>
 </head>
 
@@ -160,16 +359,23 @@
       <div class="nav-links">
         <a href="#home" data-i18n="nav_home">Ana Sayfa</a>
         <a href="#about" data-i18n="nav_about">Hakkımda</a>
-        <a href="#experience" data-i18n="nav_experience">Eğitim ve Tecrübeler</a>
+        <a href="#education" data-i18n="nav_education">Eğitim</a>
+        <a href="#experience" data-i18n="nav_experience">Deneyim</a>
         <a href="#projects" data-i18n="nav_projects">Projeler</a>
+        <a href="#competitions" data-i18n="nav_competitions">Yarışmalar</a>
+        <a href="#clubs" data-i18n="nav_clubs">Kulüpler ve Topluluklar</a>
         <a href="#contact" data-i18n="nav_contact">İletişim</a>
       </div>
+
+
+
 
       <button id="langToggle" class="lang-btn" type="button">EN</button>
     </div>
   </nav>
 
   <div class="container">
+
 
     <!-- ANA SAYFA -->
     <section id="home">
@@ -201,38 +407,110 @@
       </p>
     </section>
 
-    <!-- EĞİTİM & TECRÜBE (DB) -->
-    <section id="experience">
-      <h2 class="section-title" data-i18n="exp_title">Eğitim ve Tecrübeler</h2>
-      <div class="underline"></div>
+    <!-- EĞİTİM (DB) -->
+    <section id="education" class="section">
+      <div class="section-header">
+        <h2 data-i18n="education_title">Eğitim</h2>
+      </div>
 
-      <div class="timeline">
-        {% for e in experiences %}
-          <div class="timeline-item">
-            <div style="font-size:18px; font-weight:900;">{{ e.title }}</div>
-
-            <div style="color:rgba(255,255,255,0.82); margin-top:6px;">
-              {{ e.organization }}{% if e.location %} · {{ e.location }}{% endif %}
+      <div class="cv-list">
+        {% for edu in education_items %}
+          <div class="cv-card">
+            <div class="cv-date">
+              <div class="cv-date-range">
+                {% if edu.start_date %}<span>{{ edu.start_date|date:"M Y" }}</span>{% endif %}
+                <span class="dash">–</span>
+                {% if edu.end_date %}
+                  <span>{{ edu.end_date|date:"M Y" }}</span>
+                {% else %}
+                  <span>Present</span>
+                {% endif %}
+              </div>
             </div>
 
-            <div class="meta">
-              {% if e.end_date %}
-                {{ e.start_date|date:"M Y" }} – {{ e.end_date|date:"M Y" }}
-              {% else %}
-                {{ e.start_date|date:"M Y" }} – Present
+            <div class="cv-body">
+              <div class="cv-header">
+                <div class="cv-title-block">
+
+                  <!-- OKUL ADI (EN ÜST + BÜYÜK) -->
+                  <h3 class="edu-school">{{ edu.school }}</h3>
+
+                  <!-- DERECE / PROGRAM (ALT + DAHA KÜÇÜK) -->
+                  <div class="edu-degree">
+                    {{ edu.degree }}
+                  </div>
+
+                  <!-- DEPARTMENT (EN KÜÇÜK) -->
+                  {% if edu.department %}
+                    <div class="edu-department muted">
+                      {{ edu.department }}
+                    </div>
+                  {% endif %}
+
+                </div>
+              </div>
+
+              {% if edu.bullet_list %}
+                <ul class="cv-bullets">
+                  {% for b in edu.bullet_list %}
+                    <li>{{ b }}</li>
+                  {% endfor %}
+                </ul>
               {% endif %}
-            </div>
 
-            {% if e.highlight_list %}
-              <ul class="highlights">
-                {% for line in e.highlight_list %}
-                  <li>{{ line }}</li>
-                {% endfor %}
-              </ul>
-            {% endif %}
+            </div>
           </div>
         {% empty %}
-          <div style="color:var(--muted);">No experience yet. Add items via /admin.</div>
+          <p class="muted">Henüz eğitim bilgisi eklenmedi.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- DENEYİM (DB) -->
+    <section id="experience" class="section">
+      <div class="section-header">
+        <h2 data-i18n="experience_title">Deneyim</h2>
+      </div>
+
+      <div class="cv-list">
+        {% for e in experiences %}
+          <div class="cv-card">
+            <div class="cv-date">
+              <div class="cv-date-range">
+                {% if e.start_date %}<span>{{ e.start_date|date:"M Y" }}</span>{% endif %}
+                <span class="dash">–</span>
+                {% if e.end_date %}
+                  <span>{{ e.end_date|date:"M Y" }}</span>
+                {% else %}
+                  <span>Present</span>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="cv-body">
+              <div class="cv-header">
+                <div class="cv-title-block">
+                  <h3 class="cv-title">{{ e.title }}</h3>
+                  <div class="cv-sub muted">
+                    {{ e.organization }}{% if e.location %} · {{ e.location }}{% endif %}
+                  </div>
+                  {% if e.role %}
+                    <div class="muted" style="margin-top:6px;">{{ e.role }}</div>
+                  {% endif %}
+                </div>
+              </div>
+
+              {% if e.highlight_list %}
+                <ul class="cv-bullets">
+                  {% for h in e.highlight_list %}
+                    <li>{{ h }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          </div>
+        {% empty %}
+          <p class="muted">Henüz deneyim eklenmedi.</p>
         {% endfor %}
       </div>
     </section>
@@ -243,58 +521,46 @@
       <h2 class="section-title" data-i18n="proj_title">Projeler</h2>
       <div class="underline"></div>
 
+      <h3 style="margin:0 0 14px;" data-i18n="proj_featured">Öne Çıkan Projeler</h3>
+      <div class="grid" style="margin-bottom:28px;">
+        {% for project in featured_projects %}
+          {% include "portfolio/projects_card.html" with project=project featured=True %}
+        {% empty %}
+          <p style="color:var(--muted);" data-i18n="proj_no_featured">
+            No featured projects yet. Mark projects as featured in /admin.
+          </p>
+        {% endfor %}
+      </div>
+
+      <h3 style="margin:0 0 14px;" data-i18n="proj_all">Tüm Projeler</h3>
       <div class="grid">
         {% for project in projects %}
-          <div class="card">
-            <div class="card-media">
-              {% if project.image %}
-                <img src="{{ project.image.url }}" alt="{{ project.title }}">
-              {% else %}
-                No image
-              {% endif %}
-            </div>
-
-            <div class="card-body">
-              <h3 class="card-title">{{ project.title }}</h3>
-
-              <div class="period">
-                {% if project.end_date %}
-                  {{ project.start_date|date:"M Y" }} – {{ project.end_date|date:"M Y" }}
-                {% else %}
-                  {{ project.start_date|date:"M Y" }} – Present
-                {% endif %}
-              </div>
-
-              <p class="desc">{{ project.description }}</p>
-
-              {% if project.tag_list %}
-                <div class="tags">
-                  {% for t in project.tag_list %}
-                    <span class="tag">{{ t }}</span>
-                  {% endfor %}
-                </div>
-              {% endif %}
-            </div>
-
-            <div class="card-footer">
-              {% if project.url %}
-                <a class="btn primary" href="{{ project.url }}" target="_blank" rel="noopener noreferrer">View</a>
-                <div class="link">External link</div>
-              {% else %}
-                <div class="link">No external link</div>
-              {% endif %}
-
-              <div class="link">
-                Added: {{ project.created_at|date:"M d, Y" }}
-              </div>
-            </div>
-          </div>
+          {% include "portfolio/projects_card.html" with project=project featured=False %}
         {% empty %}
           <p style="color:var(--muted);">No projects yet. Add projects via /admin.</p>
         {% endfor %}
       </div>
     </section>
+    <!-- YARIŞMALAR (DB) -->
+    <section id="competitions" class="section">
+      <div class="section-header">
+        <h2 data-i18n="competitions_title">Yarışmalar</h2>
+        <p class="muted" data-i18n="competitions_subtitle">
+          Katıldığım yarışmalar ve elde edilen sonuçlar
+        </p>
+      </div>
 
+      <div class="timeline">
+        {% for c in competitions %}
+          {% include "portfolio/competition_timeline_item.html" with c=c %}
+        {% empty %}
+          <p class="muted" data-i18n="competitions_empty">Henüz yarışma eklenmedi.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <style>
+</style>
 
     <!-- İLETİŞİM -->
     <section id="contact">
@@ -320,33 +586,45 @@
       tr: {
         nav_home: "Ana Sayfa",
         nav_about: "Hakkımda",
-        nav_experience: "Eğitim ve Tecrübeler",
-        nav_projects: "Projeler",
-        nav_contact: "İletişim",
+        nav_education: "Eğitim",
+        nav_experience: "Deneyim",
+        nav_competitions: "Yarışmalar",
+        nav_clubs: "Kulüpler ve Topluluklar",
+
+        edu_title: "Eğitim",
+        exp_title: "Deneyim",
+        proj_title: "Projeler",
+        comp_title: "Yarışmalar",
+        clubs_title: "Kulüpler ve Topluluklar",
+        contact_title: "İletişim",
+
         home_hello: "Merhaba, Ben",
         home_sub: "Bilgisayar Mühendisliği öğrencisi · Computer Vision · Algorithms · Autonomous Systems",
         home_desc: "Bilgisayarlı görü, algoritmalar ve otonom sistemler üzerine odaklanıyorum. Gerçek dünya problemleri için veri odaklı, sağlam ve iteratif çözümler üretmeyi seviyorum.",
         about_title: "Hakkımda",
         about_text: "İzmir’de Bilgisayar Mühendisliği öğrencisiyim. Algoritmalar, veri yapıları ve bilgisayarlı görü alanlarında projeler geliştiriyorum. Özellikle gerçek dünya uygulamalarında model geliştirme, veri hazırlama ve sistem tasarımı süreçlerine ilgi duyuyorum.",
-        exp_title: "Eğitim ve Tecrübeler",
-        proj_title: "Projeler",
-        contact_title: "İletişim",
         contact_text: "Bana ulaşmak için e-posta gönderebilir veya LinkedIn’den yazabilirsin."
       },
       en: {
         nav_home: "Home",
         nav_about: "About",
-        nav_experience: "Education & Experience",
-        nav_projects: "Projects",
-        nav_contact: "Contact",
+        nav_education: "Education",
+        nav_experience: "Experience",
+        nav_competitions: "Competitions",
+        nav_clubs: "Clubs & Communities",
+
+        edu_title: "Education",
+        exp_title: "Experience",
+        proj_title: "Projects",
+        comp_title: "Competitions",
+        clubs_title: "Clubs & Communities",
+        contact_title: "Contact",
+
         home_hello: "Hi, I’m",
         home_sub: "Computer Engineering student · Computer Vision · Algorithms · Autonomous Systems",
         home_desc: "I focus on computer vision, algorithms, and autonomous systems. I enjoy building data-driven, robust, iterative solutions for real-world engineering problems.",
         about_title: "About",
         about_text: "I’m a Computer Engineering student in Izmir. I build projects in algorithms, data structures, and computer vision. I’m especially interested in model development, dataset preparation, and system design for real-world applications.",
-        exp_title: "Education & Experience",
-        proj_title: "Projects",
-        contact_title: "Contact",
         contact_text: "Feel free to email me or reach out via LinkedIn."
       }
     };
@@ -368,6 +646,53 @@
     });
 
     applyLang("tr");
-  </script>
+  const sections = ["home","about","experience","projects","contact"]
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  const navLinks = Array.from(document.querySelectorAll(".nav-links a"));
+
+  function setActiveLink() {
+    const scrollY = window.scrollY + 120; // navbar offset
+    let currentId = "home";
+
+    for (const sec of sections) {
+      if (sec.offsetTop <= scrollY) currentId = sec.id;
+    }
+
+    navLinks.forEach(a => {
+      const href = a.getAttribute("href") || "";
+      a.classList.toggle("active", href === `#${currentId}`);
+    });
+  }
+
+  window.addEventListener("scroll", setActiveLink);
+  setActiveLink();
+</script>
+<script>
+  const sections = ["home","about","experience","projects","contact"]
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  const navLinks = Array.from(document.querySelectorAll(".nav-links a"));
+
+  function setActiveLink() {
+    const scrollY = window.scrollY + 120; // navbar offset
+    let currentId = "home";
+
+    for (const sec of sections) {
+      if (sec.offsetTop <= scrollY) currentId = sec.id;
+    }
+
+    navLinks.forEach(a => {
+      const href = a.getAttribute("href") || "";
+      a.classList.toggle("active", href === `#${currentId}`);
+    });
+  }
+
+  window.addEventListener("scroll", setActiveLink);
+  setActiveLink();
+</script>
+
 </body>
 </html>

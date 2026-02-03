@@ -1,0 +1,51 @@
+<div class="card {% if featured %}featured{% endif %}">
+  <div class="card-media">
+    {% if project.image %}
+      <img src="{{ project.image.url }}" alt="{{ project.title }}">
+    {% else %}
+      No image
+    {% endif %}
+  </div>
+
+  <div class="card-body">
+    <h3 class="card-title">{{ project.title }}</h3>
+
+    {% if project.role %}
+      <div class="meta">{{ project.role }}</div>
+    {% endif %}
+
+    <div class="period">
+      {% if project.end_date %}
+        {{ project.start_date|date:"M Y" }} – {{ project.end_date|date:"M Y" }}
+      {% else %}
+        {{ project.start_date|date:"M Y" }} – Present
+      {% endif %}
+    </div>
+
+    <p class="desc">{{ project.description }}</p>
+
+    {% if project.tag_list %}
+      <div class="tags">
+        {% for t in project.tag_list %}
+          <span class="tag">{{ t }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="card-footer">
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      {% if project.github_url %}
+        <a class="btn" href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+      {% endif %}
+
+      {% if project.demo_url %}
+        <a class="btn primary" href="{{ project.demo_url }}" target="_blank" rel="noopener noreferrer">Demo</a>
+      {% elif project.url %}
+        <a class="btn primary" href="{{ project.url }}" target="_blank" rel="noopener noreferrer">View</a>
+      {% endif %}
+    </div>
+
+    <div class="link">Added: {{ project.created_at|date:"M d, Y" }}</div>
+  </div>
+</div>

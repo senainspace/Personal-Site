@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import Project, Experience
+from .models import Project, Experience, Education, Competition
+
 
 
 def _split_commas(s: str) -> list[str]:
@@ -24,18 +25,39 @@ def _split_lines(s: str) -> list[str]:
 
 
 def index(request):
-    projects = list(Project.objects.all())
-    experiences = list(Experience.objects.all())
+    featured_projects = list(
+        Project.objects.filter(is_featured=True).order_by("-start_date", "-created_at")
+    )
+    projects = list(
+        Project.objects.filter(is_featured=False).order_by("-start_date", "-created_at")
+    )
 
-    # Prepare template-friendly lists (templates can't call split()).
+    experiences = list(Experience.objects.all())
+    education_items = list(Education.objects.all())
+    competitions = Competition.objects.all()   # 👈 EKLENDİ
+
+    # Project tag split
+    for p in featured_projects:
+        p.tag_list = _split_commas(p.tech_stack)
     for p in projects:
         p.tag_list = _split_commas(p.tech_stack)
 
+    # Experience highlights split
     for e in experiences:
         e.highlight_list = _split_lines(e.highlights)
+
+    # Education description split
+    for edu in education_items:
+        edu.bullet_list = _split_lines(edu.description)
 
     return render(
         request,
         "portfolio/index.html",
-        {"projects": projects, "experiences": experiences},
+        {
+            "featured_projects": featured_projects,
+            "projects": projects,
+            "experiences": experiences,
+            "education_items": education_items,
+            "competitions": competitions,   # 👈 TEMPLATE’E GİDİYOR
+        },
     )

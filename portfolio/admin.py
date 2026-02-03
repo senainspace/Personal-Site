@@ -1,24 +1,74 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import Project, Experience
+from .models import Project, Experience, Education, Competition
 
+
+@admin.register(Education)
+class EducationAdmin(admin.ModelAdmin):
+    list_display = ("school", "department", "degree", "education_period", "order")
+    list_editable = ("order",)
+    ordering = ("order", "-start_date")
+    search_fields = ("school", "degree", "description")
+    list_filter = ("start_date","end_date")
+
+    fieldsets = (
+        ("Education Info", {"fields": ("school", "department", "degree")}),
+        ("Timeline", {"fields": ("start_date", "end_date", "order")}),
+        ("Details", {"fields": ("description",)}),
+        ("Timestamps", {"fields": ("created_at", "updated_at")}),
+    )
+    readonly_fields = ("created_at", "updated_at")
+
+    def education_period(self, obj: Education):
+        if obj.end_date:
+            return f"{obj.start_date:%b %Y} – {obj.end_date:%b %Y}"
+        return f"{obj.start_date:%b %Y} – Present"
+
+    education_period.short_description = "Period"
+
+@admin.register(Experience)
+class ExperienceAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for Experience.
+    Keep it simple and match the Experience model fields.
+    """
+
+    list_display = ("title", "organization", "location", "experience_period", "start_date", "end_date")
+    list_display_links = ("title",)
+    list_filter = ("organization", "start_date")
+    search_fields = ("title", "organization", "location", "highlights")
+    ordering = ("-start_date",)
+
+    fieldsets = (
+        ("Experience Info", {"fields": ("title", "organization", "location")}),
+        ("Timeline", {"fields": ("start_date", "end_date")}),
+        ("Highlights", {"fields": ("highlights",)}),
+    )
+
+    def experience_period(self, obj: Experience):
+        if obj.end_date:
+            return f"{obj.start_date:%b %Y} – {obj.end_date:%b %Y}"
+        return f"{obj.start_date:%b %Y} – Present"
+
+    experience_period.short_description = "Period"
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     """
     Clean listing + image preview for a professional look.
     """
-
-    list_display = ("thumbnail", "title", "project_period", "url", "created_at")
+    list_display = ("thumbnail", "title", "is_featured", "project_period", "created_at")
+    list_editable = ("is_featured",)
+    list_filter = ("is_featured", "start_date", "created_at")
     list_display_links = ("title",)
-    list_filter = ("start_date", "created_at")
     search_fields = ("title", "description", "tech_stack")
     readonly_fields = ("preview_large", "created_at", "updated_at")
 
     fieldsets = (
-        ("Project Info", {"fields": ("title", "description", "url")}),
-        ("Timeline & Tags", {"fields": ("start_date", "end_date", "tech_stack")}),
+        ("Project Info", {"fields": ("title", "description", "role")}),
+        ("Links", {"fields": ("github_url", "demo_url", "url")}),
+        ("Timeline & Tags", {"fields": ("start_date", "end_date", "tech_stack", "is_featured")}),
         ("Image", {"fields": ("image", "preview_large")}),
         ("Timestamps", {"fields": ("created_at", "updated_at")}),
     )
@@ -42,8 +92,7 @@ class ProjectAdmin(admin.ModelAdmin):
             )
         return "No image uploaded."
 
-    preview_large.short_description = "Large Preview"
-
+    preview_large.short_description = "Large Preview" # shows above the image upload field
     def project_period(self, obj: Project):
         if obj.end_date:
             return f"{obj.start_date:%b %Y} – {obj.end_date:%b %Y}"
@@ -51,24 +100,67 @@ class ProjectAdmin(admin.ModelAdmin):
 
     project_period.short_description = "Period"
 
+from django.contrib import admin
+from django.utils.html import format_html
 
-@admin.register(Experience)
-class ExperienceAdmin(admin.ModelAdmin):
-    list_display = ("order", "title", "organization", "experience_period", "location")
-    list_display_links = ("title",)
+from .models import Competition
+
+
+@admin.register(Competition)
+class CompetitionAdmin(admin.ModelAdmin):
+    list_display = ("title", "award", "date", "is_logo", "order")
+    list_filter = ("date",)
+    search_fields = ("title", "organizer", "award", "team_name", "role", "team_members")
+    ordering = ("order", "-date", "-created_at")
     list_editable = ("order",)
-    search_fields = ("title", "organization", "location", "highlights")
-    list_filter = ("start_date",)
+
+    readonly_fields = ("team_logo_preview", "image_preview")
 
     fieldsets = (
-        ("Main", {"fields": ("title", "organization", "location")}),
-        ("Timeline", {"fields": ("start_date", "end_date", "order")}),
-        ("Highlights", {"fields": ("highlights",)}),
+        ("Temel Bilgiler", {
+            "fields": ("title", "organizer", "date", "award", "url")
+        }),
+        ("Takım", {
+            "fields": ("team_name", "team_logo", "team_logo_preview", "team_members")
+        }),
+        ("Senin Rolün", {
+            "fields": ("role",)
+        }),
+        ("İçerik", {
+            "fields": ("description", "highlights")
+        }),
+        ("Görsel", {
+            "fields": ("image", "image_preview")
+        }),
+        ("Sıralama", {
+            "fields": ("order",)
+        }),
     )
 
-    def experience_period(self, obj: Experience):
-        if obj.end_date:
-            return f"{obj.start_date:%b %Y} – {obj.end_date:%b %Y}"
-        return f"{obj.start_date:%b %Y} – Present"
+    def team_logo_preview(self, obj):
+        if obj.team_logo:
+            return format_html(
+                '<img src="{}" style="height:50px;width:50px;object-fit:contain;border-radius:8px;border:1px solid #ddd;" />',
+                obj.team_logo.url
+            )
+        return "-"
 
-    experience_period.short_description = "Period"
+    team_logo_preview.short_description = "Team Logo Preview"
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="height:70px;width:120px;object-fit:cover;border-radius:10px;border:1px solid #ddd;" />',
+                obj.image.url
+            )
+        return "-"
+
+    image_preview.short_description = "Image Preview"
+
+    def is_logo(self, obj):
+        return bool(obj.team_logo)
+
+    is_logo.boolean = True
+    is_logo.short_description = "Logo?"
+
+
