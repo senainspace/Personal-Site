@@ -1,0 +1,52 @@
+<div class="cv-card">
+  <div class="cv-date">
+    <div class="cv-date-range">
+      {% if com.start_date %}<span>{{ com.start_date|date:"M Y" }}</span>{% endif %}
+      <span class="dash">–</span>
+      {% if com.end_date %}
+        <span>{{ com.end_date|date:"M Y" }}</span>
+      {% else %}
+        <span>Present</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="cv-body">
+    <div class="cv-header">
+      <div class="cv-title-block">
+
+        <div style="display:flex; gap:12px; align-items:center;">
+          {% if com.logo %}
+            <img src="{{ com.logo.url }}" alt="{{ com.name }}" style="width:42px;height:42px;border-radius:12px;border:1px solid var(--border);object-fit:cover;">
+          {% endif %}
+
+          <div>
+            <h3 class="cv-title">{{ com.name }}</h3>
+
+            <div class="cv-sub muted">
+              {% if com.role %}{{ com.role }}{% endif %}
+              {% if com.organization %}{% if com.role %} · {% endif %}{{ com.organization }}{% endif %}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {% if com.url %}
+        <a class="link" href="{{ com.url }}" target="_blank" rel="noopener">Link</a>
+      {% endif %}
+    </div>
+
+    {% if com.description %}
+      <p style="margin-top:10px;">{{ com.description }}</p>
+    {% endif %}
+
+    {% if com.highlight_list %}
+      <ul class="cv-bullets">
+        {% for h in com.highlight_list %}
+          <li>{{ h }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</div>

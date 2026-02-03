@@ -135,4 +135,25 @@ class Competition(models.Model):
     def __str__(self):
         return self.title
 
+class Community(models.Model):
+    name = models.CharField(max_length=200)  # kulüp/topluluk adı
+    role = models.CharField(max_length=200, blank=True)  # Member, Core Team, Lead vs.
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
 
+    organization = models.CharField(max_length=200, blank=True)  # üniversite/kurum (opsiyonel)
+    description = models.TextField(blank=True)  # kısa özet (1-2 cümle)
+    highlights = models.TextField(blank=True)  # satır satır maddeler
+    url = models.URLField(blank=True)
+
+    logo = models.ImageField(upload_to="communities/", blank=True, null=True)
+
+    order = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["order", "-start_date", "-created_at"]
+
+    def __str__(self):
+        return self.name

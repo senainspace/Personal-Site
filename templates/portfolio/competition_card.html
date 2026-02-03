@@ -1,64 +1,48 @@
-<div class="timeline-item">
-  <div class="timeline-rail">
-    <div class="timeline-dot"></div>
-    <div class="timeline-line"></div>
+<div class="comp-card"
+     role="button"
+     tabindex="0"
+     data-modal="competition"
+     data-title="{{ c.title|escape }}"
+     data-organizer="{{ c.organizer|default:''|escape }}"
+     data-date="{% if c.date %}{{ c.date|date:'M Y' }}{% endif %}"
+     data-award="{{ c.award|default:''|escape }}"
+     data-team="{{ c.team_name|default:''|escape }}"
+     data-role="{{ c.role|default:''|escape }}"
+     data-desc="{{ c.description|default:''|escape }}"
+     data-highlights="{% for h in c.highlight_list %}{{ h|escape }}{% if not forloop.last %}||{% endif %}{% endfor %}"
+     data-members="{% for m in c.member_list %}{{ m|escape }}{% if not forloop.last %}||{% endif %}{% endfor %}"
+     data-url="{{ c.url|default:''|escape }}"
+     data-img="{% if c.image %}{{ c.image.url }}{% endif %}"
+     data-logo="{% if c.team_logo %}{{ c.team_logo.url }}{% endif %}"
+>
+  <div class="comp-left">
+    {% if c.team_logo %}
+      <img class="comp-logo" src="{{ c.team_logo.url }}" alt="{{ c.team_name|default:'logo' }}">
+    {% else %}
+      <div class="comp-logo comp-logo-placeholder"></div>
+    {% endif %}
   </div>
 
-  <article class="timeline-card">
-    <div class="timeline-header">
-      <div class="timeline-title">
-        {% if c.team_logo %}
-          <img class="timeline-logo" src="{{ c.team_logo.url }}" alt="{{ c.team_name|default:'Team logo' }}">
-        {% endif %}
-
-        <div class="timeline-title-text">
-          <h3 class="card-title">{{ c.title }}</h3>
-          <div class="muted timeline-meta">
-            {% if c.organizer %}<span>{{ c.organizer }}</span>{% endif %}
-            {% if c.date %}<span>• {{ c.date|date:"M Y" }}</span>{% endif %}
-          </div>
-        </div>
-      </div>
-
+  <div class="comp-main">
+    <div class="comp-top">
+      <div class="comp-title">{{ c.title }}</div>
       {% if c.award %}
         <span class="badge">{{ c.award }}</span>
       {% endif %}
     </div>
 
-    {% if c.role or c.team_name %}
-      <div class="muted timeline-role">
-        {% if c.role %}<span><strong>Role:</strong> {{ c.role }}</span>{% endif %}
-        {% if c.team_name %}<span> • <strong>Team:</strong> {{ c.team_name }}</span>{% endif %}
-      </div>
-    {% endif %}
+    <div class="muted comp-meta">
+      {% if c.organizer %}<span>{{ c.organizer }}</span>{% endif %}
+      {% if c.date %}<span> • {{ c.date|date:"M Y" }}</span>{% endif %}
+      {% if c.team_name %}<span> • {{ c.team_name }}</span>{% endif %}
+    </div>
 
     {% if c.description %}
-      <p class="timeline-desc">{{ c.description }}</p>
+      <div class="comp-snippet muted">{{ c.description }}</div>
     {% endif %}
+  </div>
 
-    {% if c.highlights %}
-      <ul class="bullets">
-        {% for line in c.highlights.splitlines %}
-          {% if line %}<li>{{ line }}</li>{% endif %}
-        {% endfor %}
-      </ul>
-    {% endif %}
-
-    {% if c.team_members %}
-      <details class="timeline-members">
-        <summary class="muted">Team members</summary>
-        <ul class="bullets">
-          {% for m in c.team_members.splitlines %}
-            {% if m %}<li>{{ m }}</li>{% endif %}
-          {% endfor %}
-        </ul>
-      </details>
-    {% endif %}
-
-    <div class="card-footer">
-      {% if c.url %}
-        <a class="link" href="{{ c.url }}" target="_blank" rel="noopener">Details</a>
-      {% endif %}
-    </div>
-  </article>
+  <div class="comp-right muted">
+    <span class="comp-open">View</span>
+  </div>
 </div>

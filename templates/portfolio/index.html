@@ -348,6 +348,268 @@
       flex-direction: column;
       gap: 16px; /* kartlar arası boşluk */
     }
+    /* ===== COMPETITIONS: COMPACT LIST ===== */
+    .comp-card{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 52px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .comp-card:hover{
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    .comp-logo{
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      object-fit: cover;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .comp-logo-placeholder{
+      display: block;
+    }
+
+    .comp-top{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .comp-title{
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.25;
+      min-width: 0;
+    }
+
+    .comp-meta{
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    .comp-snippet{
+      margin-top: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;      /* max 2 satır */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .comp-right{
+      opacity: .7;
+    }
+
+    .comp-open{
+      font-size: 13px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+    }
+
+/* ===== MODAL ===== */
+.modal-backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.82); /* daha opak */
+  backdrop-filter: blur(6px);   /* arkayı yumuşatır (çok iyi durur) */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 9999;
+}
+
+.modal-backdrop.show{
+  display: flex;
+}
+
+.modal{
+  width: min(820px, 96vw); /* biraz daralt */
+  max-height: 90vh;
+  overflow: auto;
+  background: rgba(14,16,20,0.96); /* solid koyu panel */
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 18px 18px 16px;
+  position: relative;
+}
+
+.modal-close{
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: rgba(255,255,255,0.92);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modal-head{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.modal-head-left{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.modal-logo{
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  object-fit: cover;
+}
+
+.modal-title{
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.modal-desc{
+  color: rgba(255,255,255,0.92);
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.modal-h{
+  margin: 16px 0 6px;
+  font-size: 15px;
+  opacity: .9;
+}
+
+.modal-image{
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  margin-top: 14px;
+}
+
+.modal-footer{
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+    /* ===== MODAL ===== */
+    .modal-backdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 9999;
+    }
+
+    .modal-backdrop.show{
+      display: flex;
+    }
+
+    .modal{
+      width: min(920px, 96vw);
+      max-height: 90vh;
+      overflow: auto;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 18px 18px 16px;
+      position: relative;
+    }
+
+    .modal-close{
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: rgba(255,255,255,0.92);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .modal-head{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .modal-head-left{
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .modal-logo{
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      object-fit: cover;
+    }
+
+    .modal-title{
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .modal-desc{
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .modal-h{
+      margin: 16px 0 6px;
+      font-size: 15px;
+      opacity: .9;
+    }
+
+    .modal-image{
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      margin-top: 14px;
+    }
+
+    .modal-footer{
+      margin-top: 14px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+
+
   </style>
 </head>
 
@@ -363,7 +625,7 @@
         <a href="#experience" data-i18n="nav_experience">Deneyim</a>
         <a href="#projects" data-i18n="nav_projects">Projeler</a>
         <a href="#competitions" data-i18n="nav_competitions">Yarışmalar</a>
-        <a href="#clubs" data-i18n="nav_clubs">Kulüpler ve Topluluklar</a>
+        <a href="#communities" data-i18n="nav_clubs">Kulüpler ve Topluluklar</a>
         <a href="#contact" data-i18n="nav_contact">İletişim</a>
       </div>
 
@@ -515,7 +777,6 @@
       </div>
     </section>
 
-
     <!-- PROJELER (DB) -->
     <section id="projects">
       <h2 class="section-title" data-i18n="proj_title">Projeler</h2>
@@ -550,17 +811,33 @@
         </p>
       </div>
 
-      <div class="timeline">
+      <div class="cv-list comp-list">
         {% for c in competitions %}
-          {% include "portfolio/competition_timeline_item.html" with c=c %}
+          {% include "portfolio/competition_card.html" with c=c %}
         {% empty %}
           <p class="muted" data-i18n="competitions_empty">Henüz yarışma eklenmedi.</p>
         {% endfor %}
       </div>
     </section>
 
-    <style>
-</style>
+    <!-- KULÜPLER VE TOPLULUKLAR (DB) -->
+    <section id="communities" class="section">
+      <div class="section-header">
+        <h2 data-i18n="communities_title">Kulüpler ve Topluluklar</h2>
+        <p class="muted" data-i18n="communities_subtitle">
+          Topluluk çalışmaları, ekip rolleri ve katkılar
+        </p>
+      </div>
+
+      <div class="cv-list">
+        {% for com in communities %}
+          {% include "portfolio/community_card.html" with com=com %}
+        {% empty %}
+          <p class="muted" data-i18n="communities_empty">Henüz kulüp/topluluk eklenmedi.</p>
+        {% endfor %}
+      </div>
+    </section>
+
 
     <!-- İLETİŞİM -->
     <section id="contact">
@@ -692,6 +969,176 @@
 
   window.addEventListener("scroll", setActiveLink);
   setActiveLink();
+</script>
+<!-- COMPETITION MODAL -->
+<div id="compModal" class="modal-backdrop" aria-hidden="true">
+  <div class="modal">
+    <button class="modal-close" type="button" aria-label="Close">×</button>
+
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <img id="compModalLogo" class="modal-logo" alt="" style="display:none;">
+        <div>
+          <h3 id="compModalTitle" class="modal-title"></h3>
+          <div id="compModalMeta" class="muted"></div>
+        </div>
+      </div>
+
+      <div id="compModalBadge" class="badge" style="display:none;"></div>
+    </div>
+
+    <div id="compModalDesc" class="modal-desc"></div>
+
+    <div id="compModalHighlightsWrap" style="display:none;">
+      <h4 class="modal-h">Highlights</h4>
+      <ul id="compModalHighlights" class="cv-bullets"></ul>
+    </div>
+
+    <div id="compModalMembersWrap" style="display:none;">
+      <h4 class="modal-h">Team members</h4>
+      <ul id="compModalMembers" class="cv-bullets"></ul>
+    </div>
+
+    <div id="compModalImageWrap" style="display:none;">
+      <img id="compModalImage" class="modal-image" alt="">
+    </div>
+
+    <div class="modal-footer">
+      <a id="compModalLink" class="link" href="#" target="_blank" rel="noopener" style="display:none;">Details</a>
+    </div>
+  </div>
+</div>
+<script>
+  (function () {
+    const backdrop = document.getElementById("compModal");
+    const closeBtn = backdrop.querySelector(".modal-close");
+
+    const titleEl = document.getElementById("compModalTitle");
+    const metaEl = document.getElementById("compModalMeta");
+    const badgeEl = document.getElementById("compModalBadge");
+    const descEl = document.getElementById("compModalDesc");
+
+    const logoEl = document.getElementById("compModalLogo");
+    const imgWrap = document.getElementById("compModalImageWrap");
+    const imgEl = document.getElementById("compModalImage");
+
+    const hiWrap = document.getElementById("compModalHighlightsWrap");
+    const hiEl = document.getElementById("compModalHighlights");
+
+    const memWrap = document.getElementById("compModalMembersWrap");
+    const memEl = document.getElementById("compModalMembers");
+
+    const linkEl = document.getElementById("compModalLink");
+
+    function splitPipe(s) {
+      if (!s) return [];
+      return s.split("||").map(x => x.trim()).filter(Boolean);
+    }
+
+    function openModalFromCard(card) {
+      const t = card.dataset.title || "";
+      const organizer = card.dataset.organizer || "";
+      const date = card.dataset.date || "";
+      const award = card.dataset.award || "";
+      const team = card.dataset.team || "";
+      const role = card.dataset.role || "";
+      const desc = card.dataset.desc || "";
+      const highlights = splitPipe(card.dataset.highlights || "");
+      const members = splitPipe(card.dataset.members || "");
+      const url = card.dataset.url || "";
+      const logo = card.dataset.logo || "";
+      const img = card.dataset.img || "";
+
+      titleEl.textContent = t;
+
+      const metaBits = [];
+      if (organizer) metaBits.push(organizer);
+      if (date) metaBits.push(date);
+      if (role) metaBits.push("Role: " + role);
+      if (team) metaBits.push("Team: " + team);
+      metaEl.textContent = metaBits.join(" • ");
+
+      if (award) {
+        badgeEl.style.display = "inline-flex";
+        badgeEl.textContent = award;
+      } else {
+        badgeEl.style.display = "none";
+      }
+
+      descEl.textContent = desc;
+
+      // highlights
+      hiEl.innerHTML = "";
+      if (highlights.length) {
+        hiWrap.style.display = "block";
+        highlights.forEach(h => {
+          const li = document.createElement("li");
+          li.textContent = h;
+          hiEl.appendChild(li);
+        });
+      } else {
+        hiWrap.style.display = "none";
+      }
+
+      // members
+      memEl.innerHTML = "";
+      if (members.length) {
+        memWrap.style.display = "block";
+        members.forEach(m => {
+          const li = document.createElement("li");
+          li.textContent = m;
+          memEl.appendChild(li);
+        });
+      } else {
+        memWrap.style.display = "none";
+      }
+
+      // logo
+      if (logo) {
+        logoEl.src = logo;
+        logoEl.style.display = "block";
+      } else {
+        logoEl.style.display = "none";
+      }
+
+      // image
+      if (img) {
+        imgEl.src = img;
+        imgWrap.style.display = "block";
+      } else {
+        imgWrap.style.display = "none";
+      }
+
+      // link
+      if (url) {
+        linkEl.href = url;
+        linkEl.style.display = "inline-block";
+      } else {
+        linkEl.style.display = "none";
+      }
+
+      backdrop.classList.add("show");
+      backdrop.setAttribute("aria-hidden", "false");
+    }
+
+    function closeModal() {
+      backdrop.classList.remove("show");
+      backdrop.setAttribute("aria-hidden", "true");
+    }
+
+    document.addEventListener("click", (e) => {
+      const card = e.target.closest('[data-modal="competition"]');
+      if (card) openModalFromCard(card);
+
+      if (e.target === backdrop) closeModal();
+    });
+
+    closeBtn.addEventListener("click", closeModal);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+  })();
 </script>
 
 </body>

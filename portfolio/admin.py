@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import Project, Experience, Education, Competition
+from .models import Project, Experience, Education, Competition, Community
 
 
 @admin.register(Education)
@@ -163,4 +163,11 @@ class CompetitionAdmin(admin.ModelAdmin):
     is_logo.boolean = True
     is_logo.short_description = "Logo?"
 
+@admin.register(Community)
+class CommunityAdmin(admin.ModelAdmin):
+    list_display = ("name", "role", "start_date", "end_date", "order")
+    list_filter = ("role",)
+    search_fields = ("name", "role", "organization")
+    ordering = ("order", "-start_date")
+    list_editable = ("order",)
 
