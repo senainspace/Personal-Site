@@ -11,6 +11,19 @@ class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
 
+    # ✅ NEW: card için kısa özet (1 cümle / 1-2 satır)
+    short_description = models.CharField(
+        max_length=220,
+        blank=True,
+        help_text="Card view için kısa özet (öneri: 1 cümle)."
+    )
+
+    # ✅ NEW: modal için detaylı açıklama
+    long_description = models.TextField(
+        blank=True,
+        help_text="Modal view için detaylı açıklama. Boşsa description kullanılır."
+    )
+
     image = models.ImageField(upload_to="projects/", blank=True, null=True)
     url = models.URLField(blank=True, null=True)
 
@@ -157,3 +170,14 @@ class Community(models.Model):
 
     def __str__(self):
         return self.name
+class ProjectImage(models.Model):
+    project = models.ForeignKey("Project", on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField(upload_to="project_images/")
+    caption = models.CharField(max_length=120, blank=True, default="")
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return f"{self.project.title} image {self.id}"

@@ -159,67 +159,79 @@ document.addEventListener("DOMContentLoaded", () => {
       const logo = card.dataset.logo || "";
       const img = card.dataset.img || "";
 
-      titleEl.textContent = t;
+      if (titleEl) titleEl.textContent = t;
 
       const metaBits = [];
       if (organizer) metaBits.push(organizer);
       if (date) metaBits.push(date);
       if (role) metaBits.push("Role: " + role);
       if (team) metaBits.push("Team: " + team);
-      metaEl.textContent = metaBits.join(" • ");
+      if (metaEl) metaEl.textContent = metaBits.join(" • ");
 
-      if (award) {
-        badgeEl.style.display = "inline-flex";
-        badgeEl.textContent = award;
-      } else {
-        badgeEl.style.display = "none";
+      if (badgeEl) {
+        if (award) {
+          badgeEl.style.display = "inline-flex";
+          badgeEl.textContent = award;
+        } else {
+          badgeEl.style.display = "none";
+        }
       }
 
-      descEl.textContent = desc;
+      if (descEl) descEl.textContent = desc;
 
-      hiEl.innerHTML = "";
-      if (highlights.length) {
-        hiWrap.style.display = "block";
-        highlights.forEach((h) => {
-          const li = document.createElement("li");
-          li.textContent = h;
-          hiEl.appendChild(li);
-        });
-      } else {
-        hiWrap.style.display = "none";
+      if (hiEl) hiEl.innerHTML = "";
+      if (hiWrap) {
+        if (highlights.length && hiEl) {
+          hiWrap.style.display = "block";
+          highlights.forEach((h) => {
+            const li = document.createElement("li");
+            li.textContent = h;
+            hiEl.appendChild(li);
+          });
+        } else {
+          hiWrap.style.display = "none";
+        }
       }
 
-      memEl.innerHTML = "";
-      if (members.length) {
-        memWrap.style.display = "block";
-        members.forEach((m) => {
-          const li = document.createElement("li");
-          li.textContent = m;
-          memEl.appendChild(li);
-        });
-      } else {
-        memWrap.style.display = "none";
+      if (memEl) memEl.innerHTML = "";
+      if (memWrap) {
+        if (members.length && memEl) {
+          memWrap.style.display = "block";
+          members.forEach((m) => {
+            const li = document.createElement("li");
+            li.textContent = m;
+            memEl.appendChild(li);
+          });
+        } else {
+          memWrap.style.display = "none";
+        }
       }
 
-      if (logo) {
-        logoEl.src = logo;
-        logoEl.style.display = "block";
-      } else {
-        logoEl.style.display = "none";
+      if (logoEl) {
+        if (logo) {
+          logoEl.src = logo;
+          logoEl.style.display = "block";
+        } else {
+          logoEl.style.display = "none";
+        }
       }
 
-      if (img) {
-        imgEl.src = img;
-        imgWrap.style.display = "block";
-      } else {
-        imgWrap.style.display = "none";
+      if (imgWrap && imgEl) {
+        if (img) {
+          imgEl.src = img;
+          imgWrap.style.display = "block";
+        } else {
+          imgWrap.style.display = "none";
+        }
       }
 
-      if (url) {
-        linkEl.href = url;
-        linkEl.style.display = "inline-block";
-      } else {
-        linkEl.style.display = "none";
+      if (linkEl) {
+        if (url) {
+          linkEl.href = url;
+          linkEl.style.display = "inline-block";
+        } else {
+          linkEl.style.display = "none";
+        }
       }
 
       backdrop.classList.add("show");
@@ -240,111 +252,181 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.target === backdrop) closeModal();
     });
 
-    closeBtn?.addEventListener("click", closeModal);
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeModal();
     });
   })();
 
-  // ---------------------------
-  // 4) Project Modal (show)  <-- competitions ile aynı mantık
-  // ---------------------------
+  // ===============================
+  // Project Modal (safe + minimal)
+  // ===============================
   (function setupProjectModal() {
     const backdrop = document.getElementById("projectModal");
     if (!backdrop) return;
 
-    const closeBtn = backdrop.querySelector(".modal-close");
+    const modalCloseBtn = backdrop.querySelector(".modal-close");
 
-    const titleEl = document.getElementById("pmTitle");
-    const metaEl = document.getElementById("pmMeta");
-    const descEl = document.getElementById("pmDesc");
-    const badgeEl = document.getElementById("pmBadge");
+    const pmImage = backdrop.querySelector("#pmImage");
+    const pmTitle = backdrop.querySelector("#pmTitle");
+    const pmMeta = backdrop.querySelector("#pmMeta");
+    const pmBadge = backdrop.querySelector("#pmBadge");
+    const pmDesc = backdrop.querySelector("#pmDesc");
 
-    const logoEl = document.getElementById("pmImage");
+    const pmTagsWrap = backdrop.querySelector("#pmTagsWrap");
+    const pmTags = backdrop.querySelector("#pmTags");
 
-    const tagsWrap = document.getElementById("pmTagsWrap");
-    const tagsEl = document.getElementById("pmTags");
+    const pmGallery = backdrop.querySelector("#pmGallery");
+    const pmView = backdrop.querySelector("#pmView");
 
-    const githubEl = document.getElementById("pmGithub");
-    const demoEl = document.getElementById("pmDemo");
-
-    function openModalFromCard(card) {
-      const title = card.dataset.title || "";
-      const role = card.dataset.role || "";
-      const period = card.dataset.period || "";
-      const desc = card.dataset.desc || "";
-      const tags = splitPipe(card.dataset.tags || "");
-      const github = card.dataset.github || "";
-      const demo = card.dataset.demo || "";
-      const featured = card.dataset.featured === "1";
-      const image = card.dataset.image || "";
-
-      titleEl.textContent = title;
-      metaEl.textContent = [role, period].filter(Boolean).join(" • ");
-      descEl.textContent = desc;
-
-      badgeEl.style.display = featured ? "inline-flex" : "none";
-
-      // logo/image
-      if (image) {
-        logoEl.src = image;
-        logoEl.style.display = "block";
-      } else {
-        logoEl.style.display = "none";
-      }
-
-      // tags
-      tagsEl.innerHTML = "";
-      if (tags.length) {
-        tagsWrap.style.display = "block";
-        tags.forEach((t) => {
-          const span = document.createElement("span");
-          span.className = "tag";
-          span.textContent = t;
-          tagsEl.appendChild(span);
-        });
-      } else {
-        tagsWrap.style.display = "none";
-      }
-
-      // links
-      if (github) {
-        githubEl.href = github;
-        githubEl.style.display = "inline-flex";
-      } else {
-        githubEl.style.display = "none";
-      }
-
-      if (demo) {
-        demoEl.href = demo;
-        demoEl.style.display = "inline-flex";
-      } else {
-        demoEl.style.display = "none";
-      }
-
+    function openModal() {
       backdrop.classList.add("show");
       backdrop.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
+      document.body.classList.add("modal-open");
     }
 
     function closeModal() {
       backdrop.classList.remove("show");
       backdrop.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
     }
 
-    document.addEventListener("click", (e) => {
-      const card = e.target.closest('[data-modal="project"]');
-      if (card) openModalFromCard(card);
+    function setLink(el, url) {
+      if (!el) return;
+      const u = (url || "").trim();
+      if (!u) {
+        el.style.display = "none";
+        el.setAttribute("href", "#");
+        return;
+      }
+      el.style.display = "inline-flex";
+      el.setAttribute("href", u);
+    }
 
+    function fillTags(raw) {
+      if (!pmTagsWrap || !pmTags) return;
+
+      const text = (raw || "").trim();
+      pmTags.innerHTML = "";
+
+      if (!text) {
+        pmTagsWrap.style.display = "none";
+        return;
+      }
+
+      const parts = text.split("||").map((s) => s.trim()).filter(Boolean);
+      parts.forEach((t) => {
+        const span = document.createElement("span");
+        span.className = "tag";
+        span.textContent = t;
+        pmTags.appendChild(span);
+      });
+
+      pmTagsWrap.style.display = parts.length ? "block" : "none";
+    }
+
+    function fillGallery(raw) {
+      if (!pmGallery) return;
+
+      pmGallery.innerHTML = "";
+      const text = (raw || "").trim();
+
+      if (!text) {
+        pmGallery.style.display = "none";
+        return;
+      }
+
+      const urls = text.split("||").map((s) => s.trim()).filter(Boolean);
+
+      urls.forEach((u) => {
+        const img = document.createElement("img");
+        img.src = u;
+        img.alt = "Project image";
+        img.loading = "lazy";
+        pmGallery.appendChild(img);
+      });
+
+      pmGallery.style.display = urls.length ? "flex" : "none";
+    }
+
+    function fillFromCard(card) {
+      if (!card) return;
+
+      const title = card.dataset.title || "";
+      const role = card.dataset.role || "";
+      const period = card.dataset.period || "";
+      const desc = card.dataset.desc || "";
+      const tags = card.dataset.tags || "";
+      const github = card.dataset.github || "";
+      const demo = card.dataset.demo || "";
+      const featured = card.dataset.featured === "1";
+
+      const image = card.dataset.image || "";
+      const imagesRaw = card.dataset.images || "";
+
+      if (pmTitle) pmTitle.textContent = title;
+      if (pmDesc) pmDesc.textContent = desc;
+
+      const metaParts = [];
+      if (role) metaParts.push(role);
+      if (period) metaParts.push(period);
+      if (pmMeta) pmMeta.textContent = metaParts.join(" • ");
+
+      if (pmBadge) pmBadge.style.display = featured ? "inline-flex" : "none";
+
+      if (pmImage) {
+        if (image) {
+          pmImage.src = image;
+          pmImage.alt = title ? title : "";
+          pmImage.style.display = "block";
+        } else {
+          pmImage.removeAttribute("src");
+          pmImage.alt = "";
+          pmImage.style.display = "none";
+        }
+      }
+
+      fillTags(tags);
+      fillGallery(imagesRaw);
+
+      const viewUrl = (demo && demo.trim()) ? demo : ((github && github.trim()) ? github : "");
+      setLink(pmView, viewUrl);
+    }
+
+    // Open on card click (event delegation)
+    document.addEventListener("click", function (e) {
+      const card = e.target.closest(".project-card");
+      if (!card) return;
+      fillFromCard(card);
+      openModal();
+    });
+
+    // Close: X
+    if (modalCloseBtn) modalCloseBtn.addEventListener("click", closeModal);
+
+    // Close: click backdrop
+    backdrop.addEventListener("click", function (e) {
       if (e.target === backdrop) closeModal();
     });
 
-    closeBtn?.addEventListener("click", closeModal);
+    // Close: ESC (only when open)
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && backdrop.classList.contains("show")) {
+        closeModal();
+      }
+    });
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeModal();
+    // Keyboard open (Enter/Space when focused)
+    document.addEventListener("keydown", function (e) {
+      const active = document.activeElement;
+      if (!active || !active.classList || !active.classList.contains("project-card")) return;
+
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        fillFromCard(active);
+        openModal();
+      }
     });
   })();
 });

@@ -6,20 +6,31 @@
   data-title="{{ project.title|default:'' }}"
   data-role="{{ project.role|default:'' }}"
   data-period="{% if project.start_date %}{{ project.start_date|date:'M Y' }}{% endif %}{% if project.end_date %} – {{ project.end_date|date:'M Y' }}{% else %}{% if project.start_date %} – Present{% endif %}{% endif %}"
-  data-desc="{{ project.description|default:'' }}"
+  data-desc="{% if project.long_description %}{{ project.long_description|default:'' }}{% else %}{{ project.description|default:'' }}{% endif %}"
   data-tags="{% if project.tag_list %}{{ project.tag_list|join:'||' }}{% endif %}"
   data-github="{{ project.github_url|default:'' }}"
   data-demo="{% if project.demo_url %}{{ project.demo_url }}{% elif project.url %}{{ project.url }}{% else %}{% endif %}"
   data-featured="{% if featured %}1{% else %}0{% endif %}"
   data-image="{% if project.image %}{{ project.image.url }}{% endif %}"
+  data-images="{% for pi in project.images.all %}{{ pi.image.url }}{% if not forloop.last %}||{% endif %}{% endfor %}"
+
 >
-  <div class="card-media">
+    <div class="card-media">
     {% if project.image %}
       <img src="{{ project.image.url }}" alt="{{ project.title }}">
+    {% elif project.projectimage_set.all %}
+      {% with first_img=project.projectimage_set.all.0 %}
+        {% if first_img.image %}
+          <img src="{{ first_img.image.url }}" alt="{{ project.title }}">
+        {% else %}
+          <div class="muted" style="padding:14px;">No image</div>
+        {% endif %}
+      {% endwith %}
     {% else %}
       <div class="muted" style="padding:14px;">No image</div>
     {% endif %}
   </div>
+
 
   <div class="card-body">
     <h3 class="card-title">{{ project.title }}</h3>
@@ -36,7 +47,14 @@
       {% endif %}
     </div>
 
-    <p class="desc">{{ project.description }}</p>
+    <p class="desc clamp-3">
+      {% if project.short_description %}
+        {{ project.short_description }}
+      {% elif project.description %}
+        {{ project.description }}
+      {% endif %}
+    </p>
+
 
     {% if project.tag_list %}
       <div class="tags">
@@ -49,15 +67,34 @@
 
   <div class="card-footer">
     <div style="display:flex; gap:10px; flex-wrap:wrap;">
-      {% if project.github_url %}
-        <a class="btn" href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();">GitHub</a>
+      {% if project.demo_url %}
+        <a class="btn primary"
+           href="{{ project.demo_url }}"
+           target="_blank"
+           rel="noopener noreferrer"
+           onclick="event.stopPropagation();">
+           View
+        </a>
+
+      {% elif project.github_url %}
+        <a class="btn primary"
+           href="{{ project.github_url }}"
+           target="_blank"
+           rel="noopener noreferrer"
+           onclick="event.stopPropagation();">
+           View
+        </a>
+
+      {% elif project.url %}
+        <a class="btn primary"
+           href="{{ project.url }}"
+           target="_blank"
+           rel="noopener noreferrer"
+           onclick="event.stopPropagation();">
+           View
+        </a>
       {% endif %}
 
-      {% if project.demo_url %}
-        <a class="btn primary" href="{{ project.demo_url }}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();">Demo</a>
-      {% elif project.url %}
-        <a class="btn primary" href="{{ project.url }}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();">View</a>
-      {% endif %}
     </div>
 
     <div class="link">Added: {{ project.created_at|date:"M d, Y" }}</div>

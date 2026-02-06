@@ -1,16 +1,26 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import Project, Experience, Education, Competition, Community
+from .models import (
+    Project,
+    ProjectImage,
+    Experience,
+    Education,
+    Competition,
+    Community,
+)
 
 
+# -------------------------
+# Education
+# -------------------------
 @admin.register(Education)
 class EducationAdmin(admin.ModelAdmin):
     list_display = ("school", "department", "degree", "education_period", "order")
     list_editable = ("order",)
     ordering = ("order", "-start_date")
     search_fields = ("school", "degree", "description")
-    list_filter = ("start_date","end_date")
+    list_filter = ("start_date", "end_date")
 
     fieldsets = (
         ("Education Info", {"fields": ("school", "department", "degree")}),
@@ -27,13 +37,12 @@ class EducationAdmin(admin.ModelAdmin):
 
     education_period.short_description = "Period"
 
+
+# -------------------------
+# Experience
+# -------------------------
 @admin.register(Experience)
 class ExperienceAdmin(admin.ModelAdmin):
-    """
-    Admin configuration for Experience.
-    Keep it simple and match the Experience model fields.
-    """
-
     list_display = ("title", "organization", "location", "experience_period", "start_date", "end_date")
     list_display_links = ("title",)
     list_filter = ("organization", "start_date")
@@ -53,11 +62,20 @@ class ExperienceAdmin(admin.ModelAdmin):
 
     experience_period.short_description = "Period"
 
+
+# -------------------------
+# Project Images Inline
+# -------------------------
+class ProjectImageInline(admin.TabularInline):
+    model = ProjectImage
+    extra = 1
+
+
+# -------------------------
+# Project
+# -------------------------
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    """
-    Clean listing + image preview for a professional look.
-    """
     list_display = ("thumbnail", "title", "is_featured", "project_period", "created_at")
     list_editable = ("is_featured",)
     list_filter = ("is_featured", "start_date", "created_at")
@@ -65,8 +83,11 @@ class ProjectAdmin(admin.ModelAdmin):
     search_fields = ("title", "description", "tech_stack")
     readonly_fields = ("preview_large", "created_at", "updated_at")
 
+    # ✅ burada inline'ı bağlıyoruz
+    inlines = [ProjectImageInline]
+
     fieldsets = (
-        ("Project Info", {"fields": ("title", "description", "role")}),
+        ("Project Info", {"fields": ("title", "short_description", "long_description", "description", "role")}),
         ("Links", {"fields": ("github_url", "demo_url", "url")}),
         ("Timeline & Tags", {"fields": ("start_date", "end_date", "tech_stack", "is_featured")}),
         ("Image", {"fields": ("image", "preview_large")}),
@@ -92,7 +113,8 @@ class ProjectAdmin(admin.ModelAdmin):
             )
         return "No image uploaded."
 
-    preview_large.short_description = "Large Preview" # shows above the image upload field
+    preview_large.short_description = "Large Preview"
+
     def project_period(self, obj: Project):
         if obj.end_date:
             return f"{obj.start_date:%b %Y} – {obj.end_date:%b %Y}"
@@ -100,12 +122,10 @@ class ProjectAdmin(admin.ModelAdmin):
 
     project_period.short_description = "Period"
 
-from django.contrib import admin
-from django.utils.html import format_html
 
-from .models import Competition
-
-
+# -------------------------
+# Competition
+# -------------------------
 @admin.register(Competition)
 class CompetitionAdmin(admin.ModelAdmin):
     list_display = ("title", "award", "date", "is_logo", "order")
@@ -117,24 +137,12 @@ class CompetitionAdmin(admin.ModelAdmin):
     readonly_fields = ("team_logo_preview", "image_preview")
 
     fieldsets = (
-        ("Temel Bilgiler", {
-            "fields": ("title", "organizer", "date", "award", "url")
-        }),
-        ("Takım", {
-            "fields": ("team_name", "team_logo", "team_logo_preview", "team_members")
-        }),
-        ("Senin Rolün", {
-            "fields": ("role",)
-        }),
-        ("İçerik", {
-            "fields": ("description", "highlights")
-        }),
-        ("Görsel", {
-            "fields": ("image", "image_preview")
-        }),
-        ("Sıralama", {
-            "fields": ("order",)
-        }),
+        ("Temel Bilgiler", {"fields": ("title", "organizer", "date", "award", "url")}),
+        ("Takım", {"fields": ("team_name", "team_logo", "team_logo_preview", "team_members")}),
+        ("Senin Rolün", {"fields": ("role",)}),
+        ("İçerik", {"fields": ("description", "highlights")}),
+        ("Görsel", {"fields": ("image", "image_preview")}),
+        ("Sıralama", {"fields": ("order",)}),
     )
 
     def team_logo_preview(self, obj):
@@ -163,6 +171,10 @@ class CompetitionAdmin(admin.ModelAdmin):
     is_logo.boolean = True
     is_logo.short_description = "Logo?"
 
+
+# -------------------------
+# Community
+# -------------------------
 @admin.register(Community)
 class CommunityAdmin(admin.ModelAdmin):
     list_display = ("name", "role", "start_date", "end_date", "order")
@@ -170,4 +182,3 @@ class CommunityAdmin(admin.ModelAdmin):
     search_fields = ("name", "role", "organization")
     ordering = ("order", "-start_date")
     list_editable = ("order",)
-
