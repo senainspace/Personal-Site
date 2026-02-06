@@ -1,616 +1,13 @@
+
 <!doctype html>
 <html lang="tr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sena Koç | Portfolio</title>
-  <style>
 
-    html { scroll-behavior: smooth; }
-    .nav-links a.active{
-      color: rgba(255,255,255,0.95);
-      background: rgba(255,255,255,0.08);
-    }
-
-    :root{
-      --bg:#070A12;
-      --panel:rgba(255,255,255,0.06);
-      --border:rgba(255,255,255,0.10);
-      --text:rgba(255,255,255,0.92);
-      --muted:rgba(255,255,255,0.65);
-      --accent:#ff4d6d;
-      --accent2:#6ea8ff;
-      --shadow:0 18px 60px rgba(0,0,0,0.45);
-      --radius:18px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: radial-gradient(900px 500px at 20% 10%, rgba(110,168,255,0.18), transparent 60%),
-                  radial-gradient(900px 500px at 80% 30%, rgba(255,77,109,0.14), transparent 60%),
-                  var(--bg);
-      color:var(--text);
-    }
-
-    /* NAVBAR */
-    .navbar{
-      position: sticky; top:0; z-index:50;
-      backdrop-filter: blur(10px);
-      background: rgba(7,10,18,0.65);
-      border-bottom:1px solid var(--border);
-    }
-    .nav-inner{
-      max-width:1100px; margin:0 auto;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 18px; gap:14px;
-    }
-    .brand{font-weight:900; letter-spacing:.3px}
-    .brand .accent{color:var(--accent)}
-    .nav-links{display:flex; gap:16px; align-items:center}
-    .nav-links a{
-      color:rgba(255,255,255,0.75);
-      text-decoration:none; font-size:13.5px;
-      padding:10px 8px; border-radius:10px;
-    }
-    .nav-links a:hover{background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.95)}
-    .lang-btn{
-      padding:9px 12px; border-radius:12px;
-      background: rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.14);
-      color: rgba(255,255,255,0.9);
-      cursor:pointer; font-weight:800; font-size:12.5px;
-    }
-    @media (max-width: 900px){ .nav-links{display:none} }
-
-    /* LAYOUT */
-    .container{max-width:1100px; margin:0 auto; padding:0 18px;}
-    section{padding:70px 0 20px;}
-    .section-title{
-      font-size:44px; margin:0 0 10px;
-      letter-spacing:-0.5px;
-    }
-    .underline{
-      width:90px; height:4px; background:var(--accent);
-      border-radius:10px; margin:14px 0 26px;
-    }
-
-    /* HOME */
-    #home{min-height:82vh; display:flex; align-items:center; text-align:center;}
-    .home-wrap{max-width:900px; margin:0 auto;}
-    .home-wrap h1{font-size:64px; margin:0 0 10px;}
-    .home-wrap h2{margin:0 0 14px; font-size:24px; color:var(--muted); font-weight:550;}
-    .home-wrap p{margin:0 auto 22px; max-width:700px; color:var(--muted); line-height:1.65;}
-    .actions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 16px; border-radius:14px;
-      text-decoration:none; color:rgba(255,255,255,0.92);
-      border:1px solid var(--border);
-      background: rgba(255,255,255,0.06);
-      font-weight:800; font-size:13.5px;
-      transition: transform .15s ease, background .15s ease;
-    }
-    .btn:hover{transform: translateY(-2px); background: rgba(255,255,255,0.09);}
-    .btn.primary{background: linear-gradient(90deg, var(--accent), var(--accent2)); border:none;}
-
-
-    /* PROJECTS */
-    .grid{display:grid; gap:18px; grid-template-columns:repeat(3, minmax(0, 1fr));}
-    @media (max-width: 980px){ .grid{grid-template-columns:repeat(2, 1fr);} }
-    @media (max-width: 640px){ .grid{grid-template-columns:1fr;} }
-
-    .card{
-      background: var(--panel);
-      border:1px solid var(--border);
-      border-radius: 22px;
-      overflow:hidden;
-      box-shadow: var(--shadow);
-      display:flex; flex-direction:column;
-      min-height: 420px;
-    }
-    .card-media{
-      height:180px;
-      background: rgba(0,0,0,0.25);
-      display:flex; align-items:center; justify-content:center;
-      color: rgba(255,255,255,0.55);
-      font-weight:700;
-    }
-    .card-media img{width:100%; height:100%; object-fit:cover;}
-    .card-body{padding:16px 16px 18px; display:flex; flex-direction:column; gap:10px; flex:1;}
-    .card-title{font-size:18px; margin:0;}
-    .period{font-size:12px; color:rgba(255,255,255,0.60);}
-    .desc{color:rgba(255,255,255,0.78); line-height:1.55; font-size:14px; margin:0;}
-    .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:6px;}
-    .tag{
-      font-size:12px;
-      color: rgba(255,255,255,0.78);
-      background: rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.10);
-      padding:7px 10px;
-      border-radius:999px;
-    }
-    .card-footer{padding:0 16px 16px; display:flex; gap:10px; align-items:center; justify-content:space-between;}
-    .link{color:rgba(255,255,255,0.75); font-size:13px;}
-    .link a{color:rgba(255,255,255,0.9); text-decoration:none;}
-    .link a:hover{text-decoration:underline;}
-
-    /* ===== COMPETITIONS TIMELINE ===== */
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 28px 1fr;
-      gap: 14px;
-      align-items: start;
-    }
-
-    .timeline-rail {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      min-height: 100%;
-      padding-top: 6px;
-    }
-
-    .timeline-dot {
-      height: 10px;
-      width: 10px;
-      border-radius: 999px;
-      border: 1px solid #3a3a3a;
-      background: #141414;
-      z-index: 2;
-    }
-
-    .timeline-line {
-      position: absolute;
-      top: 16px;
-      bottom: -16px;
-      width: 1px;
-      background: #2a2a2a;
-    }
-
-    .timeline-item:last-child .timeline-line {
-      display: none;
-    }
-
-    .timeline-card {
-      background: #141414;
-      border: 1px solid #2a2a2a;
-      border-radius: 14px;
-      padding: 16px;
-    }
-
-    .timeline-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .timeline-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .timeline-logo {
-      height: 40px;
-      width: 40px;
-      border-radius: 10px;
-      border: 1px solid #2a2a2a;
-      background: #101010;
-      object-fit: contain;
-    }
-
-    .timeline-meta {
-      margin-top: 4px;
-    }
-
-    .timeline-role {
-      margin-top: 8px;
-    }
-
-    .timeline-desc {
-      margin-top: 10px;
-    }
-
-    .timeline-members summary {
-      cursor: pointer;
-      margin-top: 8px;
-    }
-
-    /* CONTACT */
-    .contact-box{
-      background: var(--panel);
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      padding:18px;
-      box-shadow: var(--shadow);
-    }
-    .contact-box a{color: rgba(255,255,255,0.92);}
-
-    /* ===== CV CARD (Education + Experience) ===== */
-    .cv-card{
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: var(--shadow);
-      display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 18px;
-      align-items: start;
-    }
-
-    .cv-date{
-      opacity: .8;
-      font-size: 13px;
-    }
-
-    .cv-date-range{
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      line-height: 1.2;
-    }
-
-    .cv-date-range .dash{
-      opacity: .6;
-    }
-
-    .cv-body{
-      min-width: 0; /* taşma/çakışma fix */
-    }
-
-    .cv-header{
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: flex-start;
-    }
-
-    .cv-title-block{
-      min-width: 0;
-    }
-
-    .cv-title{
-      margin: 0;
-      font-size: 20px;
-      line-height: 1.2;
-      word-break: break-word;
-    }
-
-    .cv-sub{
-      margin-top: 6px;
-      line-height: 1.25;
-      word-break: break-word;
-    }
-
-    .cv-right{
-      max-width: 320px;
-      text-align: right;
-    }
-
-    .cv-bullets{
-      margin: 12px 0 0;
-      padding-left: 18px;
-    }
-
-    .cv-bullets li{
-      margin: 6px 0;
-    }
-
-    /* Mobilde düzgün kırılım */
-    @media (max-width: 720px){
-      .cv-card{
-        grid-template-columns: 1fr;
-      }
-      .cv-date-range{
-        flex-direction: row;
-        gap: 8px;
-        align-items: baseline;
-      }
-      .cv-date-range .dash{
-        display: inline;
-      }
-      .cv-right{
-        text-align: left;
-        max-width: none;
-      }
-    }
-    /* ===== EDUCATION TYPOGRAPHY ===== */
-    .edu-school {
-      margin: 0;
-      font-size: 22px;
-      font-weight: 600;
-      line-height: 1.25;
-    }
-
-    .edu-degree {
-      margin-top: 6px;
-      font-size: 16px;
-      font-weight: 500;
-      opacity: 0.9;
-    }
-
-    .edu-department {
-      margin-top: 4px;
-      font-size: 14px;
-      opacity: 0.75;
-    }
-    .cv-list{
-      display: flex;
-      flex-direction: column;
-      gap: 16px; /* kartlar arası boşluk */
-    }
-    /* ===== COMPETITIONS: COMPACT LIST ===== */
-    .comp-card{
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px 16px;
-      box-shadow: var(--shadow);
-      display: grid;
-      grid-template-columns: 52px 1fr auto;
-      gap: 14px;
-      align-items: center;
-      cursor: pointer;
-    }
-
-    .comp-card:hover{
-      border-color: rgba(255,255,255,0.18);
-    }
-
-    .comp-logo{
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      object-fit: cover;
-      background: rgba(255,255,255,0.04);
-    }
-
-    .comp-logo-placeholder{
-      display: block;
-    }
-
-    .comp-top{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .comp-title{
-      font-size: 18px;
-      font-weight: 600;
-      line-height: 1.25;
-      min-width: 0;
-    }
-
-    .comp-meta{
-      margin-top: 4px;
-      line-height: 1.3;
-    }
-
-    .comp-snippet{
-      margin-top: 8px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;      /* max 2 satır */
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .comp-right{
-      opacity: .7;
-    }
-
-    .comp-open{
-      font-size: 13px;
-      padding: 6px 10px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-    }
-
-/* ===== MODAL ===== */
-.modal-backdrop{
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.82); /* daha opak */
-  backdrop-filter: blur(6px);   /* arkayı yumuşatır (çok iyi durur) */
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  z-index: 9999;
-}
-
-.modal-backdrop.show{
-  display: flex;
-}
-
-.modal{
-  width: min(820px, 96vw); /* biraz daralt */
-  max-height: 90vh;
-  overflow: auto;
-  background: rgba(14,16,20,0.96); /* solid koyu panel */
-  border: 1px solid rgba(255,255,255,0.12);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  box-shadow: var(--shadow);
-  padding: 18px 18px 16px;
-  position: relative;
-}
-
-.modal-close{
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: rgba(255,255,255,0.92);
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.modal-head{
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-.modal-head-left{
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.modal-logo{
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  object-fit: cover;
-}
-
-.modal-title{
-  margin: 0;
-  font-size: 22px;
-  line-height: 1.25;
-}
-
-.modal-desc{
-  color: rgba(255,255,255,0.92);
-  margin-top: 12px;
-  line-height: 1.6;
-}
-
-.modal-h{
-  margin: 16px 0 6px;
-  font-size: 15px;
-  opacity: .9;
-}
-
-.modal-image{
-  width: 100%;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  margin-top: 14px;
-}
-
-.modal-footer{
-  margin-top: 14px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-
-    /* ===== MODAL ===== */
-    .modal-backdrop{
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.65);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      z-index: 9999;
-    }
-
-    .modal-backdrop.show{
-      display: flex;
-    }
-
-    .modal{
-      width: min(920px, 96vw);
-      max-height: 90vh;
-      overflow: auto;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      padding: 18px 18px 16px;
-      position: relative;
-    }
-
-    .modal-close{
-      position: absolute;
-      top: 10px;
-      right: 12px;
-      width: 36px;
-      height: 36px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: rgba(255,255,255,0.92);
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    .modal-head{
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 14px;
-    }
-
-    .modal-head-left{
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .modal-logo{
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      object-fit: cover;
-    }
-
-    .modal-title{
-      margin: 0;
-      font-size: 22px;
-      line-height: 1.25;
-    }
-
-    .modal-desc{
-      margin-top: 12px;
-      line-height: 1.6;
-    }
-
-    .modal-h{
-      margin: 16px 0 6px;
-      font-size: 15px;
-      opacity: .9;
-    }
-
-    .modal-image{
-      width: 100%;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      margin-top: 14px;
-    }
-
-    .modal-footer{
-      margin-top: 14px;
-      display: flex;
-      justify-content: flex-end;
-    }
-
-
-
-  </style>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
 </head>
 
 <body>
@@ -629,15 +26,11 @@
         <a href="#contact" data-i18n="nav_contact">İletişim</a>
       </div>
 
-
-
-
       <button id="langToggle" class="lang-btn" type="button">EN</button>
     </div>
   </nav>
 
   <div class="container">
-
 
     <!-- ANA SAYFA -->
     <section id="home">
@@ -670,10 +63,8 @@
     </section>
 
     <!-- EĞİTİM (DB) -->
-    <section id="education" class="section">
-      <div class="section-header">
-        <h2 data-i18n="education_title">Eğitim</h2>
-      </div>
+    <section id="education" >
+      <h2 class="section-title" data-i18n="education_title">Eğitim</h2>
 
       <div class="cv-list">
         {% for edu in education_items %}
@@ -729,10 +120,8 @@
     </section>
 
     <!-- DENEYİM (DB) -->
-    <section id="experience" class="section">
-      <div class="section-header">
-        <h2 data-i18n="experience_title">Deneyim</h2>
-      </div>
+    <section id="experience">
+      <h2 class="section-title" data-i18n="experience_title">Deneyim</h2>
 
       <div class="cv-list">
         {% for e in experiences %}
@@ -792,6 +181,37 @@
           </p>
         {% endfor %}
       </div>
+    </section>
+
+      <!-- PROJECT MODAL -->
+      <div id="projectModal" class="modal-backdrop" aria-hidden="true">
+        <div class="modal">
+          <button class="modal-close" type="button" aria-label="Close">×</button>
+
+          <div class="modal-head">
+            <div class="modal-head-left">
+              <img id="pmImage" class="modal-logo" alt="" style="display:none;">
+              <div>
+                <h3 id="pmTitle" class="modal-title"></h3>
+                <div id="pmMeta" class="muted"></div>
+              </div>
+            </div>
+            <span id="pmBadge" class="badge" style="display:none;">Featured</span>
+          </div>
+
+          <p id="pmDesc" class="modal-desc"></p>
+
+          <div id="pmTagsWrap" style="display:none;">
+            <h4 class="modal-h">Tech Stack</h4>
+            <div id="pmTags" class="tags"></div>
+          </div>
+
+          <div class="modal-footer">
+            <a id="pmGithub" class="btn" href="#" target="_blank" rel="noopener" style="display:none;">GitHub</a>
+            <a id="pmDemo" class="btn primary" href="#" target="_blank" rel="noopener" style="display:none;">View</a>
+          </div>
+        </div>
+      </div>
 
       <h3 style="margin:0 0 14px;" data-i18n="proj_all">Tüm Projeler</h3>
       <div class="grid">
@@ -801,15 +221,9 @@
           <p style="color:var(--muted);">No projects yet. Add projects via /admin.</p>
         {% endfor %}
       </div>
-    </section>
     <!-- YARIŞMALAR (DB) -->
-    <section id="competitions" class="section">
-      <div class="section-header">
-        <h2 data-i18n="competitions_title">Yarışmalar</h2>
-        <p class="muted" data-i18n="competitions_subtitle">
-          Katıldığım yarışmalar ve elde edilen sonuçlar
-        </p>
-      </div>
+    <section id="competitions">
+      <h2 class="section-title" data-i18n="competitions_title">Yarışmalar</h2>
 
       <div class="cv-list comp-list">
         {% for c in competitions %}
@@ -819,15 +233,48 @@
         {% endfor %}
       </div>
     </section>
+    <!-- COMPETITION MODAL -->
+    <div id="compModal" class="modal-backdrop" aria-hidden="true">
+      <div class="modal">
+        <button class="modal-close" type="button" aria-label="Close">×</button>
+
+        <div class="modal-head">
+          <div class="modal-head-left">
+            <img id="compModalLogo" class="modal-logo" alt="" style="display:none;">
+            <div>
+              <h3 id="compModalTitle" class="modal-title"></h3>
+              <div id="compModalMeta" class="muted"></div>
+            </div>
+          </div>
+
+          <div id="compModalBadge" class="badge" style="display:none;"></div>
+        </div>
+
+        <div id="compModalDesc" class="modal-desc"></div>
+
+        <div id="compModalHighlightsWrap" style="display:none;">
+          <h4 class="modal-h">Highlights</h4>
+          <ul id="compModalHighlights" class="cv-bullets"></ul>
+        </div>
+
+        <div id="compModalMembersWrap" style="display:none;">
+          <h4 class="modal-h">Team members</h4>
+          <ul id="compModalMembers" class="cv-bullets"></ul>
+        </div>
+
+        <div id="compModalImageWrap" style="display:none;">
+          <img id="compModalImage" class="modal-image" alt="">
+        </div>
+
+        <div class="modal-footer">
+          <a id="compModalLink" class="link" href="#" target="_blank" rel="noopener" style="display:none;">Details</a>
+        </div>
+      </div>
+    </div>
 
     <!-- KULÜPLER VE TOPLULUKLAR (DB) -->
-    <section id="communities" class="section">
-      <div class="section-header">
-        <h2 data-i18n="communities_title">Kulüpler ve Topluluklar</h2>
-        <p class="muted" data-i18n="communities_subtitle">
-          Topluluk çalışmaları, ekip rolleri ve katkılar
-        </p>
-      </div>
+    <section id="communities">
+      <h2 class="section-title" data-i18n="communities_title">Kulüpler&Topluluklar</h2>
 
       <div class="cv-list">
         {% for com in communities %}
@@ -857,289 +304,6 @@
 
   </div>
 
-  <script>
-    // Minimal TR/EN toggle for fixed UI texts (projects/experience content stays as entered in admin)
-    const translations = {
-      tr: {
-        nav_home: "Ana Sayfa",
-        nav_about: "Hakkımda",
-        nav_education: "Eğitim",
-        nav_experience: "Deneyim",
-        nav_competitions: "Yarışmalar",
-        nav_clubs: "Kulüpler ve Topluluklar",
-
-        edu_title: "Eğitim",
-        exp_title: "Deneyim",
-        proj_title: "Projeler",
-        comp_title: "Yarışmalar",
-        clubs_title: "Kulüpler ve Topluluklar",
-        contact_title: "İletişim",
-
-        home_hello: "Merhaba, Ben",
-        home_sub: "Bilgisayar Mühendisliği öğrencisi · Computer Vision · Algorithms · Autonomous Systems",
-        home_desc: "Bilgisayarlı görü, algoritmalar ve otonom sistemler üzerine odaklanıyorum. Gerçek dünya problemleri için veri odaklı, sağlam ve iteratif çözümler üretmeyi seviyorum.",
-        about_title: "Hakkımda",
-        about_text: "İzmir’de Bilgisayar Mühendisliği öğrencisiyim. Algoritmalar, veri yapıları ve bilgisayarlı görü alanlarında projeler geliştiriyorum. Özellikle gerçek dünya uygulamalarında model geliştirme, veri hazırlama ve sistem tasarımı süreçlerine ilgi duyuyorum.",
-        contact_text: "Bana ulaşmak için e-posta gönderebilir veya LinkedIn’den yazabilirsin."
-      },
-      en: {
-        nav_home: "Home",
-        nav_about: "About",
-        nav_education: "Education",
-        nav_experience: "Experience",
-        nav_competitions: "Competitions",
-        nav_clubs: "Clubs & Communities",
-
-        edu_title: "Education",
-        exp_title: "Experience",
-        proj_title: "Projects",
-        comp_title: "Competitions",
-        clubs_title: "Clubs & Communities",
-        contact_title: "Contact",
-
-        home_hello: "Hi, I’m",
-        home_sub: "Computer Engineering student · Computer Vision · Algorithms · Autonomous Systems",
-        home_desc: "I focus on computer vision, algorithms, and autonomous systems. I enjoy building data-driven, robust, iterative solutions for real-world engineering problems.",
-        about_title: "About",
-        about_text: "I’m a Computer Engineering student in Izmir. I build projects in algorithms, data structures, and computer vision. I’m especially interested in model development, dataset preparation, and system design for real-world applications.",
-        contact_text: "Feel free to email me or reach out via LinkedIn."
-      }
-    };
-
-    let currentLang = "tr";
-    const btn = document.getElementById("langToggle");
-
-    function applyLang(lang){
-      document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.getAttribute("data-i18n");
-        if (translations[lang][key]) el.textContent = translations[lang][key];
-      });
-      btn.textContent = (lang === "tr") ? "EN" : "TR";
-      currentLang = lang;
-    }
-
-    btn.addEventListener("click", () => {
-      applyLang(currentLang === "tr" ? "en" : "tr");
-    });
-
-    applyLang("tr");
-  const sections = ["home","about","experience","projects","contact"]
-    .map(id => document.getElementById(id))
-    .filter(Boolean);
-
-  const navLinks = Array.from(document.querySelectorAll(".nav-links a"));
-
-  function setActiveLink() {
-    const scrollY = window.scrollY + 120; // navbar offset
-    let currentId = "home";
-
-    for (const sec of sections) {
-      if (sec.offsetTop <= scrollY) currentId = sec.id;
-    }
-
-    navLinks.forEach(a => {
-      const href = a.getAttribute("href") || "";
-      a.classList.toggle("active", href === `#${currentId}`);
-    });
-  }
-
-  window.addEventListener("scroll", setActiveLink);
-  setActiveLink();
-</script>
-<script>
-  const sections = ["home","about","experience","projects","contact"]
-    .map(id => document.getElementById(id))
-    .filter(Boolean);
-
-  const navLinks = Array.from(document.querySelectorAll(".nav-links a"));
-
-  function setActiveLink() {
-    const scrollY = window.scrollY + 120; // navbar offset
-    let currentId = "home";
-
-    for (const sec of sections) {
-      if (sec.offsetTop <= scrollY) currentId = sec.id;
-    }
-
-    navLinks.forEach(a => {
-      const href = a.getAttribute("href") || "";
-      a.classList.toggle("active", href === `#${currentId}`);
-    });
-  }
-
-  window.addEventListener("scroll", setActiveLink);
-  setActiveLink();
-</script>
-<!-- COMPETITION MODAL -->
-<div id="compModal" class="modal-backdrop" aria-hidden="true">
-  <div class="modal">
-    <button class="modal-close" type="button" aria-label="Close">×</button>
-
-    <div class="modal-head">
-      <div class="modal-head-left">
-        <img id="compModalLogo" class="modal-logo" alt="" style="display:none;">
-        <div>
-          <h3 id="compModalTitle" class="modal-title"></h3>
-          <div id="compModalMeta" class="muted"></div>
-        </div>
-      </div>
-
-      <div id="compModalBadge" class="badge" style="display:none;"></div>
-    </div>
-
-    <div id="compModalDesc" class="modal-desc"></div>
-
-    <div id="compModalHighlightsWrap" style="display:none;">
-      <h4 class="modal-h">Highlights</h4>
-      <ul id="compModalHighlights" class="cv-bullets"></ul>
-    </div>
-
-    <div id="compModalMembersWrap" style="display:none;">
-      <h4 class="modal-h">Team members</h4>
-      <ul id="compModalMembers" class="cv-bullets"></ul>
-    </div>
-
-    <div id="compModalImageWrap" style="display:none;">
-      <img id="compModalImage" class="modal-image" alt="">
-    </div>
-
-    <div class="modal-footer">
-      <a id="compModalLink" class="link" href="#" target="_blank" rel="noopener" style="display:none;">Details</a>
-    </div>
-  </div>
-</div>
-<script>
-  (function () {
-    const backdrop = document.getElementById("compModal");
-    const closeBtn = backdrop.querySelector(".modal-close");
-
-    const titleEl = document.getElementById("compModalTitle");
-    const metaEl = document.getElementById("compModalMeta");
-    const badgeEl = document.getElementById("compModalBadge");
-    const descEl = document.getElementById("compModalDesc");
-
-    const logoEl = document.getElementById("compModalLogo");
-    const imgWrap = document.getElementById("compModalImageWrap");
-    const imgEl = document.getElementById("compModalImage");
-
-    const hiWrap = document.getElementById("compModalHighlightsWrap");
-    const hiEl = document.getElementById("compModalHighlights");
-
-    const memWrap = document.getElementById("compModalMembersWrap");
-    const memEl = document.getElementById("compModalMembers");
-
-    const linkEl = document.getElementById("compModalLink");
-
-    function splitPipe(s) {
-      if (!s) return [];
-      return s.split("||").map(x => x.trim()).filter(Boolean);
-    }
-
-    function openModalFromCard(card) {
-      const t = card.dataset.title || "";
-      const organizer = card.dataset.organizer || "";
-      const date = card.dataset.date || "";
-      const award = card.dataset.award || "";
-      const team = card.dataset.team || "";
-      const role = card.dataset.role || "";
-      const desc = card.dataset.desc || "";
-      const highlights = splitPipe(card.dataset.highlights || "");
-      const members = splitPipe(card.dataset.members || "");
-      const url = card.dataset.url || "";
-      const logo = card.dataset.logo || "";
-      const img = card.dataset.img || "";
-
-      titleEl.textContent = t;
-
-      const metaBits = [];
-      if (organizer) metaBits.push(organizer);
-      if (date) metaBits.push(date);
-      if (role) metaBits.push("Role: " + role);
-      if (team) metaBits.push("Team: " + team);
-      metaEl.textContent = metaBits.join(" • ");
-
-      if (award) {
-        badgeEl.style.display = "inline-flex";
-        badgeEl.textContent = award;
-      } else {
-        badgeEl.style.display = "none";
-      }
-
-      descEl.textContent = desc;
-
-      // highlights
-      hiEl.innerHTML = "";
-      if (highlights.length) {
-        hiWrap.style.display = "block";
-        highlights.forEach(h => {
-          const li = document.createElement("li");
-          li.textContent = h;
-          hiEl.appendChild(li);
-        });
-      } else {
-        hiWrap.style.display = "none";
-      }
-
-      // members
-      memEl.innerHTML = "";
-      if (members.length) {
-        memWrap.style.display = "block";
-        members.forEach(m => {
-          const li = document.createElement("li");
-          li.textContent = m;
-          memEl.appendChild(li);
-        });
-      } else {
-        memWrap.style.display = "none";
-      }
-
-      // logo
-      if (logo) {
-        logoEl.src = logo;
-        logoEl.style.display = "block";
-      } else {
-        logoEl.style.display = "none";
-      }
-
-      // image
-      if (img) {
-        imgEl.src = img;
-        imgWrap.style.display = "block";
-      } else {
-        imgWrap.style.display = "none";
-      }
-
-      // link
-      if (url) {
-        linkEl.href = url;
-        linkEl.style.display = "inline-block";
-      } else {
-        linkEl.style.display = "none";
-      }
-
-      backdrop.classList.add("show");
-      backdrop.setAttribute("aria-hidden", "false");
-    }
-
-    function closeModal() {
-      backdrop.classList.remove("show");
-      backdrop.setAttribute("aria-hidden", "true");
-    }
-
-    document.addEventListener("click", (e) => {
-      const card = e.target.closest('[data-modal="competition"]');
-      if (card) openModalFromCard(card);
-
-      if (e.target === backdrop) closeModal();
-    });
-
-    closeBtn.addEventListener("click", closeModal);
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeModal();
-    });
-  })();
-</script>
-
+<script src="{% static 'js/site.js' %}"></script>
 </body>
 </html>

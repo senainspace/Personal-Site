@@ -1,9 +1,23 @@
-<div class="card {% if featured %}featured{% endif %}">
+<div
+  class="card project-card {% if featured %}featured{% endif %}"
+  role="button"
+  tabindex="0"
+  data-modal="project"
+  data-title="{{ project.title|default:'' }}"
+  data-role="{{ project.role|default:'' }}"
+  data-period="{% if project.start_date %}{{ project.start_date|date:'M Y' }}{% endif %}{% if project.end_date %} – {{ project.end_date|date:'M Y' }}{% else %}{% if project.start_date %} – Present{% endif %}{% endif %}"
+  data-desc="{{ project.description|default:'' }}"
+  data-tags="{% if project.tag_list %}{{ project.tag_list|join:'||' }}{% endif %}"
+  data-github="{{ project.github_url|default:'' }}"
+  data-demo="{% if project.demo_url %}{{ project.demo_url }}{% elif project.url %}{{ project.url }}{% else %}{% endif %}"
+  data-featured="{% if featured %}1{% else %}0{% endif %}"
+  data-image="{% if project.image %}{{ project.image.url }}{% endif %}"
+>
   <div class="card-media">
     {% if project.image %}
       <img src="{{ project.image.url }}" alt="{{ project.title }}">
     {% else %}
-      No image
+      <div class="muted" style="padding:14px;">No image</div>
     {% endif %}
   </div>
 
@@ -17,7 +31,7 @@
     <div class="period">
       {% if project.end_date %}
         {{ project.start_date|date:"M Y" }} – {{ project.end_date|date:"M Y" }}
-      {% else %}
+      {% elif project.start_date %}
         {{ project.start_date|date:"M Y" }} – Present
       {% endif %}
     </div>
@@ -36,13 +50,13 @@
   <div class="card-footer">
     <div style="display:flex; gap:10px; flex-wrap:wrap;">
       {% if project.github_url %}
-        <a class="btn" href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="btn" href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();">GitHub</a>
       {% endif %}
 
       {% if project.demo_url %}
-        <a class="btn primary" href="{{ project.demo_url }}" target="_blank" rel="noopener noreferrer">Demo</a>
+        <a class="btn primary" href="{{ project.demo_url }}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();">Demo</a>
       {% elif project.url %}
-        <a class="btn primary" href="{{ project.url }}" target="_blank" rel="noopener noreferrer">View</a>
+        <a class="btn primary" href="{{ project.url }}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();">View</a>
       {% endif %}
     </div>
 
