@@ -49,20 +49,20 @@
       </div>
     </section>
 
-    <!-- HAKKIMDA (şimdilik sabit) -->
+    <!-- HAKKIMDA -->
     <section id="about">
       <h2 class="section-title" data-i18n="about_title">Hakkımda</h2>
       <div class="underline"></div>
       <p style="color:var(--muted); max-width: 850px; line-height:1.7;">
         <span data-i18n="about_text">
-          İzmir’de Bilgisayar Mühendisliği öğrencisiyim. Algoritmalar, veri yapıları ve bilgisayarlı görü alanlarında projeler geliştiriyorum.
+          İzmir'de Bilgisayar Mühendisliği öğrencisiyim. Algoritmalar, veri yapıları ve bilgisayarlı görü alanlarında projeler geliştiriyorum.
           Özellikle gerçek dünya uygulamalarında model geliştirme, veri hazırlama ve sistem tasarımı süreçlerine ilgi duyuyorum.
         </span>
       </p>
     </section>
 
     <!-- EĞİTİM (DB) -->
-    <section id="education" >
+    <section id="education">
       <h2 class="section-title" data-i18n="education_title">Eğitim</h2>
 
       <div class="cv-list">
@@ -75,7 +75,7 @@
                 {% if edu.end_date %}
                   <span>{{ edu.end_date|date:"M Y" }}</span>
                 {% else %}
-                  <span>Present</span>
+                  <span data-i18n="present">Devam Ediyor</span>
                 {% endif %}
               </div>
             </div>
@@ -83,37 +83,43 @@
             <div class="cv-body">
               <div class="cv-header">
                 <div class="cv-title-block">
-
-                  <!-- OKUL ADI (EN ÜST + BÜYÜK) -->
-                  <h3 class="edu-school">{{ edu.school }}</h3>
-
-                  <!-- DERECE / PROGRAM (ALT + DAHA KÜÇÜK) -->
-                  <div class="edu-degree">
+                  <h3 class="edu-school"
+                      data-content-tr="{{ edu.school }}"
+                      data-content-en="{{ edu.school_en|default:edu.school }}">
+                    {{ edu.school }}
+                  </h3>
+                  <div class="edu-degree"
+                       data-content-tr="{{ edu.degree }}"
+                       data-content-en="{{ edu.degree_en|default:edu.degree }}">
                     {{ edu.degree }}
                   </div>
-
-                  <!-- DEPARTMENT (EN KÜÇÜK) -->
                   {% if edu.department %}
-                    <div class="edu-department muted">
+                    <div class="edu-department muted"
+                         data-content-tr="{{ edu.department }}"
+                         data-content-en="{{ edu.department_en|default:edu.department }}">
                       {{ edu.department }}
                     </div>
                   {% endif %}
-
                 </div>
               </div>
 
               {% if edu.bullet_list %}
-                <ul class="cv-bullets">
+                <ul class="cv-bullets"
+                    data-list-tr="{{ edu.description }}"
+                    data-list-en="{{ edu.description_en|default:edu.description }}">
                   {% for b in edu.bullet_list %}
                     <li>{{ b }}</li>
                   {% endfor %}
                 </ul>
               {% endif %}
-
             </div>
           </div>
         {% empty %}
-          <p class="muted">Henüz eğitim bilgisi eklenmedi.</p>
+          <div class="placeholder-card">
+            <div class="placeholder-icon">🎓</div>
+            <p class="muted" data-i18n="edu_empty">Henüz eğitim bilgisi eklenmedi. /admin üzerinden ekleyebilirsin.</p>
+            <a class="btn" href="/admin/portfolio/education/add/" target="_blank">Admin</a>
+          </div>
         {% endfor %}
       </div>
     </section>
@@ -132,7 +138,7 @@
                 {% if e.end_date %}
                   <span>{{ e.end_date|date:"M Y" }}</span>
                 {% else %}
-                  <span>Present</span>
+                  <span data-i18n="present">Devam Ediyor</span>
                 {% endif %}
               </div>
             </div>
@@ -140,18 +146,24 @@
             <div class="cv-body">
               <div class="cv-header">
                 <div class="cv-title-block">
-                  <h3 class="cv-title">{{ e.title }}</h3>
+                  <h3 class="cv-title"
+                      data-content-tr="{{ e.title }}"
+                      data-content-en="{{ e.title_en|default:e.title }}">
+                    {{ e.title }}
+                  </h3>
                   <div class="cv-sub muted">
-                    {{ e.organization }}{% if e.location %} · {{ e.location }}{% endif %}
+                    <span data-content-tr="{{ e.organization }}"
+                          data-content-en="{{ e.organization_en|default:e.organization }}">
+                      {{ e.organization }}
+                    </span>{% if e.location %} · {{ e.location }}{% endif %}
                   </div>
-                  {% if e.role %}
-                    <div class="muted" style="margin-top:6px;">{{ e.role }}</div>
-                  {% endif %}
                 </div>
               </div>
 
               {% if e.highlight_list %}
-                <ul class="cv-bullets">
+                <ul class="cv-bullets"
+                    data-list-tr="{{ e.highlights }}"
+                    data-list-en="{{ e.highlights_en|default:e.highlights }}">
                   {% for h in e.highlight_list %}
                     <li>{{ h }}</li>
                   {% endfor %}
@@ -160,7 +172,11 @@
             </div>
           </div>
         {% empty %}
-          <p class="muted">Henüz deneyim eklenmedi.</p>
+          <div class="placeholder-card">
+            <div class="placeholder-icon">💼</div>
+            <p class="muted" data-i18n="exp_empty">Henüz deneyim eklenmedi. /admin üzerinden ekleyebilirsin.</p>
+            <a class="btn" href="/admin/portfolio/experience/add/" target="_blank">Admin</a>
+          </div>
         {% endfor %}
       </div>
     </section>
@@ -175,9 +191,13 @@
         {% for project in featured_projects %}
           {% include "portfolio/projects_card.html" with project=project featured=True %}
         {% empty %}
-          <p style="color:var(--muted);" data-i18n="proj_no_featured">
-            No featured projects yet. Mark projects as featured in /admin.
-          </p>
+          <div class="placeholder-card" style="grid-column: 1 / -1;">
+            <div class="placeholder-icon">⭐</div>
+            <p class="muted" data-i18n="proj_no_featured">
+              Henüz öne çıkan proje yok. /admin'den proje ekleyip 'featured' olarak işaretle.
+            </p>
+            <a class="btn" href="/admin/portfolio/project/add/" target="_blank">Admin</a>
+          </div>
         {% endfor %}
       </div>
 
@@ -186,48 +206,49 @@
         {% for project in projects %}
           {% include "portfolio/projects_card.html" with project=project featured=False %}
         {% empty %}
-          <p style="color:var(--muted);">No projects yet. Add projects via /admin.</p>
+          <div class="placeholder-card" style="grid-column: 1 / -1;">
+            <div class="placeholder-icon">🚀</div>
+            <p class="muted" data-i18n="proj_no_all">Henüz proje eklenmedi. /admin üzerinden ekleyebilirsin.</p>
+            <a class="btn" href="/admin/portfolio/project/add/" target="_blank">Admin</a>
+          </div>
         {% endfor %}
       </div>
 
-      <!-- PROJECT MODAL (section içinde kalsın) -->
-    <div id="projectModal" class="modal-backdrop" aria-hidden="true">
-      <div class="modal">
-        <button class="modal-close" type="button" aria-label="Close">×</button>
+      <!-- PROJECT MODAL -->
+      <div id="projectModal" class="modal-backdrop" aria-hidden="true">
+        <div class="modal">
+          <button class="modal-close" type="button" aria-label="Close">×</button>
 
-        <div class="modal-head">
-          <div class="modal-head-left">
-            <img id="pmImage" class="modal-logo" alt="" style="display:none;">
-            <div>
-              <h3 id="pmTitle" class="modal-title"></h3>
-              <div id="pmMeta" class="muted"></div>
+          <div class="modal-head">
+            <div class="modal-head-left">
+              <img id="pmImage" class="modal-logo" alt="" style="display:none;">
+              <div>
+                <h3 id="pmTitle" class="modal-title"></h3>
+                <div id="pmMeta" class="muted"></div>
+              </div>
             </div>
+            <span id="pmBadge" class="badge" style="display:none;" data-i18n="featured_badge">Öne Çıkan</span>
           </div>
-          <span id="pmBadge" class="badge" style="display:none;">Featured</span>
-        </div>
 
-        <!-- ✅ competition gibi layout -->
-        <div class="pm-layout">
-          <!-- LEFT: Gallery -->
+          <!-- Gallery: horizontal scroll -->
           <div id="pmGallery" class="pm-gallery" style="display:none;"></div>
 
-          <!-- RIGHT: Content -->
+          <!-- Content -->
           <div class="pm-content">
+            <h4 class="modal-h" data-i18n="modal_readme">README / Hakkında</h4>
             <p id="pmDesc" class="modal-desc"></p>
 
             <div id="pmTagsWrap" style="display:none;">
-              <h4 class="modal-h">Tech Stack</h4>
+              <h4 class="modal-h" data-i18n="modal_tech_stack">Teknoloji Yığını</h4>
               <div id="pmTags" class="tags"></div>
             </div>
 
-            <!-- ✅ View butonu her zaman sağ altta -->
-            <div class="modal-footer pm-footer">
-              <a id="pmView" class="btn primary" href="#" target="_blank" rel="noopener" style="display:none;">View</a>
+            <div class="pm-footer">
+              <a id="pmView" class="btn primary" href="#" target="_blank" rel="noopener" style="display:none;" data-i18n="modal_view">Görüntüle</a>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
     </section>
 
@@ -239,7 +260,11 @@
         {% for c in competitions %}
           {% include "portfolio/competition_card.html" with c=c %}
         {% empty %}
-          <p class="muted" data-i18n="competitions_empty">Henüz yarışma eklenmedi.</p>
+          <div class="placeholder-card">
+            <div class="placeholder-icon">🏆</div>
+            <p class="muted" data-i18n="competitions_empty">Henüz yarışma eklenmedi. /admin üzerinden ekleyebilirsin.</p>
+            <a class="btn" href="/admin/portfolio/competition/add/" target="_blank">Admin</a>
+          </div>
         {% endfor %}
       </div>
     </section>
@@ -257,19 +282,18 @@
               <div id="compModalMeta" class="muted"></div>
             </div>
           </div>
-
           <div id="compModalBadge" class="badge" style="display:none;"></div>
         </div>
 
         <div id="compModalDesc" class="modal-desc"></div>
 
         <div id="compModalHighlightsWrap" style="display:none;">
-          <h4 class="modal-h">Highlights</h4>
+          <h4 class="modal-h" data-i18n="modal_highlights">Öne Çıkanlar</h4>
           <ul id="compModalHighlights" class="cv-bullets"></ul>
         </div>
 
         <div id="compModalMembersWrap" style="display:none;">
-          <h4 class="modal-h">Team members</h4>
+          <h4 class="modal-h" data-i18n="modal_team_members">Takım Üyeleri</h4>
           <ul id="compModalMembers" class="cv-bullets"></ul>
         </div>
 
@@ -278,20 +302,24 @@
         </div>
 
         <div class="modal-footer">
-          <a id="compModalLink" class="link" href="#" target="_blank" rel="noopener" style="display:none;">Details</a>
+          <a id="compModalLink" class="btn primary" href="#" target="_blank" rel="noopener" style="display:none;" data-i18n="modal_details">Detaylar</a>
         </div>
       </div>
     </div>
 
     <!-- KULÜPLER VE TOPLULUKLAR (DB) -->
     <section id="communities">
-      <h2 class="section-title" data-i18n="communities_title">Kulüpler&Topluluklar</h2>
+      <h2 class="section-title" data-i18n="communities_title">Kulüpler ve Topluluklar</h2>
 
       <div class="cv-list">
         {% for com in communities %}
           {% include "portfolio/community_card.html" with com=com %}
         {% empty %}
-          <p class="muted" data-i18n="communities_empty">Henüz kulüp/topluluk eklenmedi.</p>
+          <div class="placeholder-card">
+            <div class="placeholder-icon">🤝</div>
+            <p class="muted" data-i18n="communities_empty">Henüz kulüp/topluluk eklenmedi. /admin üzerinden ekleyebilirsin.</p>
+            <a class="btn" href="/admin/portfolio/community/add/" target="_blank">Admin</a>
+          </div>
         {% endfor %}
       </div>
     </section>
@@ -302,7 +330,7 @@
       <div class="underline"></div>
       <div class="contact-box">
         <div style="color:var(--muted)" data-i18n="contact_text">
-          Bana ulaşmak için e-posta gönderebilir veya LinkedIn’den yazabilirsin.
+          Bana ulaşmak için e-posta gönderebilir veya LinkedIn'den yazabilirsin.
         </div>
         <div style="margin-top:10px;">
           <div>Email: <a href="mailto:senakoc@example.com">senakoc@example.com</a></div>

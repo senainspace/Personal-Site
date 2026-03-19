@@ -2,14 +2,32 @@
      role="button"
      tabindex="0"
      data-modal="competition"
+
      data-title="{{ c.title|escape }}"
+     data-title-tr="{{ c.title|escape }}"
+     data-title-en="{{ c.title_en|default:c.title|escape }}"
+
      data-organizer="{{ c.organizer|default:''|escape }}"
      data-date="{% if c.date %}{{ c.date|date:'M Y' }}{% endif %}"
-     data-award="{{ c.award|default:''|escape }}"
+
+     data-award="{{ c.award|escape }}"
+     data-award-tr="{{ c.award|escape }}"
+     data-award-en="{{ c.award_en|default:c.award|escape }}"
+
      data-team="{{ c.team_name|default:''|escape }}"
+
      data-role="{{ c.role|default:''|escape }}"
+     data-role-tr="{{ c.role|default:''|escape }}"
+     data-role-en="{{ c.role_en|default:c.role|default:''|escape }}"
+
      data-desc="{{ c.description|default:''|escape }}"
-     data-highlights="{% for h in c.highlight_list %}{{ h|escape }}{% if not forloop.last %}||{% endif %}{% endfor %}"
+     data-desc-tr="{{ c.description|default:''|escape }}"
+     data-desc-en="{{ c.description_en|default:c.description|default:''|escape }}"
+
+     data-highlights="{{ c.highlights|default:''|escape }}"
+     data-highlights-tr="{{ c.highlights|default:''|escape }}"
+     data-highlights-en="{{ c.highlights_en|default:c.highlights|default:''|escape }}"
+
      data-members="{% for m in c.member_list %}{{ m|escape }}{% if not forloop.last %}||{% endif %}{% endfor %}"
      data-url="{{ c.url|default:''|escape }}"
      data-img="{% if c.image %}{{ c.image.url }}{% endif %}"
@@ -25,9 +43,17 @@
 
   <div class="comp-main">
     <div class="comp-top">
-      <div class="comp-title">{{ c.title }}</div>
+      <div class="comp-title"
+           data-content-tr="{{ c.title }}"
+           data-content-en="{{ c.title_en|default:c.title }}">
+        {{ c.title }}
+      </div>
       {% if c.award %}
-        <span class="badge">{{ c.award }}</span>
+        <span class="badge"
+              data-content-tr="{{ c.award }}"
+              data-content-en="{{ c.award_en|default:c.award }}">
+          {{ c.award }}
+        </span>
       {% endif %}
     </div>
 
@@ -38,11 +64,15 @@
     </div>
 
     {% if c.description %}
-      <div class="comp-snippet muted">{{ c.description }}</div>
+      <div class="comp-snippet muted"
+           data-content-tr="{{ c.description }}"
+           data-content-en="{{ c.description_en|default:c.description }}">
+        {{ c.description }}
+      </div>
     {% endif %}
   </div>
 
   <div class="comp-right muted">
-    <span class="comp-open">View</span>
+    <span class="comp-open" data-i18n="comp_view">Görüntüle</span>
   </div>
 </div>

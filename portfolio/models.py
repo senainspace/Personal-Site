@@ -1,58 +1,35 @@
 from django.db import models
-from django.utils.text import slugify
 
 
 class Project(models.Model):
-    """
-    Portfolio project shown on the website.
-    Admin-friendly + CV-friendly: includes dates, tech tags, optional image and link.
-    """
+    title    = models.CharField(max_length=200, help_text="Başlık (TR)")
+    title_en = models.CharField(max_length=200, blank=True, help_text="Title (EN) — boşsa TR kullanılır")
 
-    title = models.CharField(max_length=200)
-    description = models.TextField()
+    description    = models.TextField()
+    short_description    = models.CharField(max_length=220, blank=True, help_text="Kart özeti (TR)")
+    short_description_en = models.CharField(max_length=220, blank=True, help_text="Card summary (EN) — boşsa TR kullanılır")
 
-    # ✅ NEW: card için kısa özet (1 cümle / 1-2 satır)
-    short_description = models.CharField(
-        max_length=220,
-        blank=True,
-        help_text="Card view için kısa özet (öneri: 1 cümle)."
-    )
+    long_description    = models.TextField(blank=True, help_text="Modal açıklama (TR)")
+    long_description_en = models.TextField(blank=True, help_text="Modal description (EN) — boşsa TR kullanılır")
 
-    # ✅ NEW: modal için detaylı açıklama
-    long_description = models.TextField(
-        blank=True,
-        help_text="Modal view için detaylı açıklama. Boşsa description kullanılır."
-    )
+    image    = models.ImageField(upload_to="projects/", blank=True, null=True)
+    url      = models.URLField(blank=True, null=True)
 
-    image = models.ImageField(upload_to="projects/", blank=True, null=True)
-    url = models.URLField(blank=True, null=True)
+    start_date = models.DateField(help_text="Proje başlangıç tarihi")
+    end_date   = models.DateField(blank=True, null=True, help_text="Devam ediyorsa boş bırak")
 
-    # NEW: When did you build this project?
-    start_date = models.DateField(help_text="Project start date")
-    end_date = models.DateField(blank=True, null=True, help_text="Leave empty if ongoing")
-
-    # NEW: Tags like: "Python, OpenCV, MediaPipe"
     tech_stack = models.CharField(
-        max_length=250,
-        blank=True,
-        help_text='Comma-separated tags, e.g. "Python, OpenCV, MediaPipe"',
+        max_length=250, blank=True,
+        help_text='Virgülle ayır: "Python, OpenCV, MediaPipe"',
     )
-    # Links
+
     github_url = models.URLField(blank=True, null=True)
-    demo_url = models.URLField(blank=True, null=True)
+    demo_url   = models.URLField(blank=True, null=True)
 
-    # Display options
-    is_featured = models.BooleanField(
-        default=False,
-        help_text="Featured projects appear first on the website."
-    )
+    is_featured = models.BooleanField(default=False, help_text="Öne çıkan projelerde göster")
 
-    # Optional subtitle under the title
-    role = models.CharField(
-        max_length=200,
-        blank=True,
-        help_text='Optional: e.g. "Raidyn Team | Autonomous Navigation"'
-    )
+    role    = models.CharField(max_length=200, blank=True, help_text='Örn: "Raidyn Team | Otonom Navigasyon" (TR)')
+    role_en = models.CharField(max_length=200, blank=True, help_text="Role (EN)")
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -65,30 +42,19 @@ class Project(models.Model):
 
 
 class Experience(models.Model):
-    """
-    Experience / Education timeline item.
-    Examples:
-    - Internship
-    - Student venture (VTOL)
-    - University / High school (education entries)
-    """
-
-    title = models.CharField(max_length=200, help_text='Role or education title, e.g. "Software Engineering Intern"')
-    organization = models.CharField(max_length=200, help_text='Company / University / Team name')
-    location = models.CharField(max_length=120, blank=True)
+    title           = models.CharField(max_length=200, help_text='Pozisyon (TR): "Yazılım Mühendisi Stajyeri"')
+    title_en        = models.CharField(max_length=200, blank=True, help_text="Title (EN)")
+    organization    = models.CharField(max_length=200, help_text="Şirket / Üniversite (TR)")
+    organization_en = models.CharField(max_length=200, blank=True, help_text="Organization (EN)")
+    location        = models.CharField(max_length=120, blank=True)
 
     start_date = models.DateField()
-    end_date = models.DateField(blank=True, null=True, help_text="Leave empty if ongoing")
+    end_date   = models.DateField(blank=True, null=True, help_text="Devam ediyorsa boş bırak")
 
-    # We'll store bullets as plain text lines (one per line) for simplicity.
-    highlights = models.TextField(
-        blank=True,
-        help_text="Write one bullet per line. Example:\n- Did X\n- Built Y\n- Improved Z",
-    )
+    highlights    = models.TextField(blank=True, help_text="Madde madde, satır başına bir madde (TR):\n- Yaptım X\n- Geliştirdim Y")
+    highlights_en = models.TextField(blank=True, help_text="Highlights (EN) — boşsa TR kullanılır")
 
-    # Control ordering manually (top to bottom) in the admin.
     order = models.PositiveIntegerField(default=0)
-
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -97,18 +63,22 @@ class Experience(models.Model):
     def __str__(self):
         return f"{self.title} · {self.organization}"
 
+
 class Education(models.Model):
-    school = models.CharField(max_length=160)
-    degree = models.CharField(max_length=160, blank=True)
-    department = models.CharField(max_length=160, blank=True)
+    school        = models.CharField(max_length=160, help_text="Okul adı (TR)")
+    school_en     = models.CharField(max_length=160, blank=True, help_text="School name (EN)")
+    degree        = models.CharField(max_length=160, blank=True, help_text="Derece (TR): Lisans, Yüksek Lisans…")
+    degree_en     = models.CharField(max_length=160, blank=True, help_text="Degree (EN): Bachelor's, Master's…")
+    department    = models.CharField(max_length=160, blank=True, help_text="Bölüm (TR)")
+    department_en = models.CharField(max_length=160, blank=True, help_text="Department (EN)")
 
     start_date = models.DateField()
-    end_date = models.DateField(blank=True, null=True)
+    end_date   = models.DateField(blank=True, null=True)
 
-    description = models.TextField(blank=True)
+    description    = models.TextField(blank=True, help_text="Notlar / maddeler (TR)")
+    description_en = models.TextField(blank=True, help_text="Notes (EN) — boşsa TR kullanılır")
 
     order = models.PositiveIntegerField(default=0)
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -117,28 +87,32 @@ class Education(models.Model):
 
     def __str__(self):
         return f"{self.school} — {self.department or self.degree}"
-from django.db import models
+
 
 class Competition(models.Model):
-    title = models.CharField(max_length=200)  # yarışma adı
-    organizer = models.CharField(max_length=200, blank=True)  # düzenleyen kurum/organizasyon
-    date = models.DateField(null=True, blank=True)  # tek gün / başlangıç tarihi gibi kullan
-    award = models.CharField(max_length=200, blank=True)  # derece/ödül (örn: Finalist, 2nd place)
+    title        = models.CharField(max_length=200, help_text="Yarışma adı (TR)")
+    title_en     = models.CharField(max_length=200, blank=True, help_text="Competition name (EN)")
+    organizer    = models.CharField(max_length=200, blank=True)
+    date         = models.DateField(null=True, blank=True)
+    award        = models.CharField(max_length=200, blank=True, help_text="Derece/ödül (TR): Finalist, 2. lik")
+    award_en     = models.CharField(max_length=200, blank=True, help_text="Award (EN)")
 
-    team_logo = models.ImageField(upload_to="competitions/", blank=True, null=True)
-    team_name = models.CharField(max_length=200, blank=True)
-    role = models.CharField(max_length=200, blank=True)  # senin rolün
+    team_logo  = models.ImageField(upload_to="competitions/", blank=True, null=True)
+    team_name  = models.CharField(max_length=200, blank=True)
+    role       = models.CharField(max_length=200, blank=True, help_text="Rolün (TR)")
+    role_en    = models.CharField(max_length=200, blank=True, help_text="Your role (EN)")
 
-    # ÖNERİ: takım üyelerini admin’de alt alta yaz (her satır 1 kişi)
-    team_members = models.TextField(blank=True)
+    team_members = models.TextField(blank=True, help_text="Satır başına bir kişi")
 
-    description = models.TextField(blank=True)  # kısa özet
-    highlights = models.TextField(blank=True)   # her satır 1 madde
-    url = models.URLField(blank=True)  # yarışma sayfası / haber / repo vb.
+    description    = models.TextField(blank=True, help_text="Kısa özet (TR)")
+    description_en = models.TextField(blank=True, help_text="Short summary (EN)")
+    highlights     = models.TextField(blank=True, help_text="Maddeler (TR)")
+    highlights_en  = models.TextField(blank=True, help_text="Highlights (EN)")
 
+    url   = models.URLField(blank=True)
     image = models.ImageField(upload_to="competitions/", blank=True, null=True)
 
-    order = models.PositiveIntegerField(default=0)  # manuel sıralama (küçük olan üstte)
+    order = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -148,17 +122,24 @@ class Competition(models.Model):
     def __str__(self):
         return self.title
 
+
 class Community(models.Model):
-    name = models.CharField(max_length=200)  # kulüp/topluluk adı
-    role = models.CharField(max_length=200, blank=True)  # Member, Core Team, Lead vs.
+    name        = models.CharField(max_length=200, help_text="Kulüp adı (TR)")
+    name_en     = models.CharField(max_length=200, blank=True, help_text="Club name (EN)")
+    role        = models.CharField(max_length=200, blank=True, help_text="Rolün (TR): Üye, Çekirdek Ekip…")
+    role_en     = models.CharField(max_length=200, blank=True, help_text="Role (EN)")
+
     start_date = models.DateField(null=True, blank=True)
-    end_date = models.DateField(null=True, blank=True)
+    end_date   = models.DateField(null=True, blank=True)
 
-    organization = models.CharField(max_length=200, blank=True)  # üniversite/kurum (opsiyonel)
-    description = models.TextField(blank=True)  # kısa özet (1-2 cümle)
-    highlights = models.TextField(blank=True)  # satır satır maddeler
-    url = models.URLField(blank=True)
+    organization = models.CharField(max_length=200, blank=True)
 
+    description    = models.TextField(blank=True, help_text="Kısa özet (TR)")
+    description_en = models.TextField(blank=True, help_text="Short summary (EN)")
+    highlights     = models.TextField(blank=True, help_text="Maddeler (TR)")
+    highlights_en  = models.TextField(blank=True, help_text="Highlights (EN)")
+
+    url  = models.URLField(blank=True)
     logo = models.ImageField(upload_to="communities/", blank=True, null=True)
 
     order = models.PositiveIntegerField(default=0)
@@ -170,11 +151,13 @@ class Community(models.Model):
 
     def __str__(self):
         return self.name
+
+
 class ProjectImage(models.Model):
     project = models.ForeignKey("Project", on_delete=models.CASCADE, related_name="images")
-    image = models.ImageField(upload_to="project_images/")
+    image   = models.ImageField(upload_to="project_images/")
     caption = models.CharField(max_length=120, blank=True, default="")
-    order = models.PositiveIntegerField(default=0)
+    order   = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ["order", "id"]

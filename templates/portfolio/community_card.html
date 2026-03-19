@@ -6,7 +6,7 @@
       {% if com.end_date %}
         <span>{{ com.end_date|date:"M Y" }}</span>
       {% else %}
-        <span>Present</span>
+        <span data-i18n="present">Devam Ediyor</span>
       {% endif %}
     </div>
   </div>
@@ -21,10 +21,16 @@
           {% endif %}
 
           <div>
-            <h3 class="cv-title">{{ com.name }}</h3>
-
+            <h3 class="cv-title"
+                data-content-tr="{{ com.name }}"
+                data-content-en="{{ com.name_en|default:com.name }}">
+              {{ com.name }}
+            </h3>
             <div class="cv-sub muted">
-              {% if com.role %}{{ com.role }}{% endif %}
+              <span data-content-tr="{{ com.role }}"
+                    data-content-en="{{ com.role_en|default:com.role }}">
+                {% if com.role %}{{ com.role }}{% endif %}
+              </span>
               {% if com.organization %}{% if com.role %} · {% endif %}{{ com.organization }}{% endif %}
             </div>
           </div>
@@ -33,16 +39,23 @@
       </div>
 
       {% if com.url %}
-        <a class="link" href="{{ com.url }}" target="_blank" rel="noopener">Link</a>
+        <a class="btn" href="{{ com.url }}" target="_blank" rel="noopener"
+           onclick="event.stopPropagation();" data-i18n="com_link">Bağlantı</a>
       {% endif %}
     </div>
 
     {% if com.description %}
-      <p style="margin-top:10px;">{{ com.description }}</p>
+      <p style="margin-top:10px;"
+         data-content-tr="{{ com.description }}"
+         data-content-en="{{ com.description_en|default:com.description }}">
+        {{ com.description }}
+      </p>
     {% endif %}
 
     {% if com.highlight_list %}
-      <ul class="cv-bullets">
+      <ul class="cv-bullets"
+          data-list-tr="{{ com.highlights }}"
+          data-list-en="{{ com.highlights_en|default:com.highlights }}">
         {% for h in com.highlight_list %}
           <li>{{ h }}</li>
         {% endfor %}
